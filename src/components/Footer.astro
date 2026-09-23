@@ -1,0 +1,137 @@
+---
+const year = new Date().getFullYear();
+
+const services = [
+  { href: '/services/sharepoint', label: 'SharePoint modernization' },
+  { href: '/services/teams', label: 'Teams apps' },
+  { href: '/services/power-platform', label: 'Power Platform' },
+  { href: '/services/azure-ai', label: 'Azure AI agents' },
+];
+
+const company = [
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img src="/logo.png" alt="InnovAItion Edge" width="180" height="36" />
+      <p>
+        A Microsoft 365 solutions provider — modernizing the digital
+        workplace with AI, custom apps, and Power Platform automation.
+      </p>
+      <p class="footer-loc">Coimbatore, India</p>
+    </div>
+
+    <div>
+      <h5>Services</h5>
+      <ul>
+        {services.map((s) => (
+          <li><a href={s.href}>{s.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h5>Company</h5>
+      <ul>
+        {company.map((c) => (
+          <li><a href={c.href}>{c.label}</a></li>
+        ))}
+        <li><a href="mailto:contact@innovaitionedge.com">contact@innovaitionedge.com</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>&copy; {year} InnovAItion Edge. All rights reserved.</span>
+    <span class="footer-note">Built with Astro · Deployed on Azure Static Web Apps</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface-alt);
+    color: var(--color-ink-500);
+    padding: var(--space-16) 0 var(--space-8);
+    margin-top: var(--space-24);
+    font-size: var(--fs-sm);
+  }
+
+  .footer-grid {
+    display: grid;
+    gap: var(--space-10);
+    grid-template-columns: 1.4fr 1fr 1fr;
+    align-items: start;
+    margin-bottom: var(--space-10);
+  }
+
+  .footer-brand p {
+    max-width: 42ch;
+    line-height: 1.6;
+  }
+
+  .footer-brand img {
+    height: 36px;
+    width: auto;
+    margin-bottom: var(--space-4);
+  }
+
+  .footer-loc {
+    color: var(--color-ink-400);
+    font-size: var(--fs-xs);
+    margin-top: var(--space-2);
+  }
+
+  h5 {
+    color: var(--color-ink-900);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 var(--space-4);
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  ul a {
+    color: var(--color-ink-500);
+  }
+
+  ul a:hover {
+    color: var(--color-primary-700);
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-ink-400);
+    font-size: var(--fs-xs);
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .footer-note {
+    color: var(--color-ink-300);
+  }
+
+  @media (max-width: 720px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+</style>

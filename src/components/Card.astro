@@ -1,0 +1,85 @@
+---
+interface Props {
+  href?: string;
+  title: string;
+  eyebrow?: string;
+  cta?: string;
+  class?: string;
+}
+
+const { href, title, eyebrow, cta = 'Learn more →', class: className } = Astro.props;
+const isLink = Boolean(href);
+const Tag = isLink ? 'a' : 'div';
+---
+
+<Tag
+  {...isLink ? { href } : {}}
+  class:list={['card', className, { 'card-linked': isLink }]}
+>
+  {eyebrow && <p class="card-eyebrow">{eyebrow}</p>}
+  <h3 class="card-title">{title}</h3>
+  <div class="card-body">
+    <slot />
+  </div>
+  {isLink && <span class="card-cta" aria-hidden="true">{cta}</span>}
+</Tag>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    transition: transform var(--dur-med) var(--ease-out),
+                box-shadow var(--dur-med) var(--ease-out),
+                border-color var(--dur-med) var(--ease-out);
+    color: inherit;
+    height: 100%;
+  }
+
+  .card-linked:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-2);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin: 0 0 var(--space-3);
+  }
+
+  .card-title {
+    font-size: var(--fs-xl);
+    margin: 0 0 var(--space-3);
+  }
+
+  .card-body {
+    color: var(--color-ink-500);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+
+  .card-body :global(p) {
+    margin: 0 0 var(--space-3);
+  }
+
+  .card-cta {
+    margin-top: var(--space-5);
+    color: var(--color-primary-700);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+  }
+
+  .card-linked:hover .card-cta {
+    color: var(--color-primary-600);
+  }
+</style>

@@ -1,12 +1,26 @@
 ---
 import '../styles/globals.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title: string;
   description?: string;
+  canonical?: string;
+  ogImage?: string;
+  noindex?: boolean;
 }
 
-const { title, description = 'InnovAItion Edge — Microsoft 365 modernization with AI agents, custom Teams and SharePoint apps, and Power Platform automation.' } = Astro.props;
+const {
+  title,
+  description = 'InnovAItion Edge — Microsoft 365 modernization with AI agents, custom Teams and SharePoint apps, and Power Platform automation.',
+  canonical,
+  ogImage = '/logo.png',
+  noindex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(canonical ?? Astro.url.pathname, Astro.site).toString();
+const ogImageURL = new URL(ogImage, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -14,34 +28,39 @@ const { title, description = 'InnovAItion Edge — Microsoft 365 modernization w
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f48027" />
+
+    <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex" />}
+
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon-large.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>{title}</title>
+
+    <slot name="head" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="container header-inner">
-        <a href="/" aria-label="InnovAItion Edge — home">
-          <img src="/logo.png" alt="InnovAItion Edge" class="brand-logo" />
-        </a>
-      </div>
-    </header>
+    <Nav />
 
-    <main>
+    <main id="main">
       <slot />
     </main>
 
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <span>&copy; {new Date().getFullYear()} InnovAItion Edge</span>
-        <span>Coimbatore, India</span>
-      </div>
-    </footer>
+    <Footer />
   </body>
 </html>
