@@ -1,0 +1,447 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { breadcrumbSchema } from '../lib/schema';
+
+const flowUrl = import.meta.env.PUBLIC_CONTACT_FLOW_URL ?? '';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Contact', path: '/contact' },
+]);
+---
+
+<Layout
+  title="Contact — InnovAItion Edge"
+  description="Book a discovery call to modernize your Microsoft 365 workplace. We reply within one business day."
+  canonical="/contact"
+>
+  <Fragment slot="head">
+    <JsonLd schema={breadcrumb} />
+  </Fragment>
+
+  <section class="page-hero">
+    <div class="container-narrow">
+      <p class="eyebrow">Contact</p>
+      <h1>Tell us what you are trying to modernize.</h1>
+      <p class="lede">
+        Fill in a few lines and we will reply within one business day with a
+        proposed 30-minute discovery call. No mailing list, no drip
+        sequence, no reselling of your email.
+      </p>
+    </div>
+  </section>
+
+  <section class="section contact-section">
+    <div class="container contact-grid">
+      <!-- Form -->
+      <div class="form-wrap">
+        <form id="contact-form" novalidate data-loaded-at={Date.now()}>
+          <div class="form-row">
+            <label for="name">Your name<span aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              autocomplete="name"
+              aria-describedby="name-err"
+            />
+            <p class="err" id="name-err" role="alert" hidden>Please enter your name.</p>
+          </div>
+
+          <div class="form-row">
+            <label for="email">Work email<span aria-hidden="true">*</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              aria-describedby="email-err"
+            />
+            <p class="err" id="email-err" role="alert" hidden>Please enter a valid email address.</p>
+          </div>
+
+          <div class="form-row">
+            <label for="company">Company</label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              autocomplete="organization"
+            />
+          </div>
+
+          <div class="form-row">
+            <label for="message">What are you trying to modernize?<span aria-hidden="true">*</span></label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              required
+              aria-describedby="message-err"
+            ></textarea>
+            <p class="err" id="message-err" role="alert" hidden>Please tell us a little about your context.</p>
+          </div>
+
+          <!-- Honeypot — real users leave this empty. Hidden from assistive tech + visually. -->
+          <div class="hp" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="form-actions">
+            <Button type="submit" variant="primary" size="lg">Send message</Button>
+            <p class="privacy-note">
+              By submitting, you consent to us replying to your email. That is all we do with it.
+            </p>
+          </div>
+
+          <div id="status" class="status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <!-- Aside — reply expectation + direct email + T10 (Bookings-halted) note -->
+      <aside class="contact-aside">
+        <div class="aside-block">
+          <h2>How this goes</h2>
+          <ul class="promise-list">
+            <li>
+              <strong>Within 1 business day</strong> — a personal reply from
+              Naveen with two or three time-slot options for a 30-minute call.
+            </li>
+            <li>
+              <strong>The call itself</strong> — we listen to context, discuss
+              constraints, and share what has worked for similar M365 estates.
+              No sales deck.
+            </li>
+            <li>
+              <strong>After the call</strong> — either a written proposal for
+              the smallest useful engagement, or an honest "we are not the
+              right fit" — with pointers where relevant.
+            </li>
+          </ul>
+        </div>
+
+        <div class="aside-block direct">
+          <h2>Prefer email?</h2>
+          <p>Reach us directly at:</p>
+          <p>
+            <a class="direct-email" href="mailto:contact@innovaitionedge.com">
+              contact@innovaitionedge.com
+            </a>
+          </p>
+          <p class="loc">
+            InnovAItion Edge · Coimbatore, India<br />
+            Reply hours: Mon–Fri, 09:00–18:00 IST
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <script define:vars={{ flowUrl }}>
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('status');
+    const submitBtn = form?.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn?.textContent;
+
+    const showError = (field, show) => {
+      const err = document.getElementById(`${field}-err`);
+      const input = document.getElementById(field);
+      if (!err || !input) return;
+      err.hidden = !show;
+      input.setAttribute('aria-invalid', show ? 'true' : 'false');
+    };
+
+    const validEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      status.textContent = '';
+      status.className = 'status';
+
+      const data = new FormData(form);
+      const name = String(data.get('name') || '').trim();
+      const email = String(data.get('email') || '').trim();
+      const company = String(data.get('company') || '').trim();
+      const message = String(data.get('message') || '').trim();
+      const honeypot = String(data.get('website') || '').trim();
+
+      // Honeypot — bots fill this. Real users don't see it.
+      if (honeypot) return;
+
+      // Time-gate — bots submit faster than a human can type.
+      const loadedAt = Number(form.dataset.loadedAt || 0);
+      const elapsed = Date.now() - loadedAt;
+      if (elapsed < 1500) return;
+
+      let valid = true;
+      showError('name', !name);
+      if (!name) valid = false;
+      showError('email', !validEmail(email));
+      if (!validEmail(email)) valid = false;
+      showError('message', !message);
+      if (!message) valid = false;
+      if (!valid) return;
+
+      if (!flowUrl) {
+        status.textContent = 'Contact endpoint is not configured. Please email us directly.';
+        status.classList.add('status-error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      try {
+        const res = await fetch(flowUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, company, message }),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        form.reset();
+        status.textContent = 'Thanks — your message is in. You will hear back within one business day.';
+        status.classList.add('status-success');
+      } catch (err) {
+        console.error(err);
+        status.textContent =
+          'Something went wrong sending the form. Please email us at contact@innovaitionedge.com and we will pick it up from there.';
+        status.classList.add('status-error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText || 'Send message';
+      }
+    });
+  </script>
+</Layout>
+
+<style>
+  .page-hero {
+    padding: var(--space-20) 0 var(--space-10);
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(244, 128, 39, 0.08), transparent 60%),
+      linear-gradient(180deg, #fff, var(--color-surface-alt));
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin: 0 0 var(--space-4);
+  }
+  .page-hero h1 {
+    max-width: 22ch;
+  }
+  .lede {
+    font-size: var(--fs-lg);
+    color: var(--color-ink-500);
+    max-width: 60ch;
+    margin: var(--space-6) 0 0;
+    line-height: 1.6;
+  }
+
+  .contact-section {
+    padding-top: var(--space-16);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--space-16);
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+  }
+
+  /* Form */
+  .form-wrap {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-1);
+  }
+
+  .form-row {
+    margin-bottom: var(--space-5);
+  }
+
+  .form-row label {
+    display: block;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--color-ink-900);
+    margin-bottom: var(--space-2);
+  }
+
+  .form-row label span {
+    color: var(--color-primary-700);
+    margin-left: 2px;
+  }
+
+  .form-row input,
+  .form-row textarea {
+    width: 100%;
+    font: inherit;
+    font-size: var(--fs-md);
+    color: var(--color-ink-900);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    transition: border-color var(--dur-fast) var(--ease-out),
+                box-shadow var(--dur-fast) var(--ease-out);
+  }
+
+  .form-row textarea {
+    resize: vertical;
+    min-height: 8rem;
+  }
+
+  .form-row input:focus,
+  .form-row textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-focus);
+  }
+
+  .form-row input[aria-invalid='true'],
+  .form-row textarea[aria-invalid='true'] {
+    border-color: var(--color-danger);
+  }
+
+  .err {
+    color: var(--color-danger);
+    font-size: var(--fs-sm);
+    margin: var(--space-2) 0 0;
+  }
+
+  /* Honeypot */
+  .hp {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .form-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+    margin-top: var(--space-6);
+  }
+
+  .privacy-note {
+    color: var(--color-ink-400);
+    font-size: var(--fs-sm);
+    margin: 0;
+    max-width: 32ch;
+    line-height: 1.5;
+  }
+
+  /* Status */
+  .status {
+    margin-top: var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius);
+    font-size: var(--fs-sm);
+    display: none;
+  }
+
+  .status-success,
+  .status-error {
+    display: block;
+  }
+
+  .status-success {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+  }
+
+  .status-error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+  }
+
+  /* Aside */
+  .contact-aside {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-6));
+  }
+
+  @media (max-width: 900px) {
+    .contact-aside {
+      position: static;
+    }
+  }
+
+  .aside-block {
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-8);
+  }
+
+  .aside-block:last-child {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .aside-block h2 {
+    font-size: var(--fs-xl);
+    margin: 0 0 var(--space-4);
+  }
+
+  .promise-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .promise-list li {
+    color: var(--color-ink-500);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--color-primary);
+  }
+
+  .promise-list strong {
+    color: var(--color-ink-900);
+    display: block;
+    margin-bottom: 2px;
+    font-weight: 600;
+  }
+
+  .direct-email {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    word-break: break-all;
+  }
+
+  .loc {
+    color: var(--color-ink-400);
+    font-size: var(--fs-sm);
+    margin: var(--space-4) 0 0;
+    line-height: 1.6;
+  }
+</style>
