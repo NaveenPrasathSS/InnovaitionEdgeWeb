@@ -36,6 +36,16 @@ const ogImageURL = new URL(ogImage, Astro.site).toString();
     <link rel="canonical" href={canonicalURL} />
     {noindex && <meta name="robots" content="noindex" />}
 
+    <meta name="author" content="InnovAItion Edge" />
+    <meta name="publisher" content="InnovAItion Edge" />
+    <meta name="generator" content="Astro" />
+
+    <!-- Geo — registered address for local-SEO signals -->
+    <meta name="geo.region" content="IN-TN" />
+    <meta name="geo.placename" content="Karur, Tamil Nadu, India" />
+    <meta name="geo.position" content="10.9601;78.0766" />
+    <meta name="ICBM" content="10.9601, 78.0766" />
+
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon-large.png" />
 
