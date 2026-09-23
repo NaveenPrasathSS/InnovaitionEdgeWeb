@@ -55,17 +55,23 @@ const flatLinks = [
 
     <nav aria-label="Main navigation" class="primary-nav">
       <ul>
-        <!-- Services with mega-menu -->
+        <!-- Services: split trigger — link navigates, chevron toggles mega-menu -->
         <li class="has-mega">
+          <a
+            href="/services"
+            class:list={['nav-link', 'mega-link', { active: isActive('/services') }]}
+            aria-current={isActive('/services') ? 'page' : undefined}
+          >
+            Services
+          </a>
           <button
             type="button"
-            class:list={['nav-link', 'mega-toggle', { active: isActive('/services') }]}
+            class="mega-chev-btn"
             id="services-toggle"
             aria-expanded="false"
             aria-controls="services-mega"
-            aria-haspopup="true"
+            aria-label="Open Services menu"
           >
-            Services
             <svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
               <path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
@@ -228,6 +234,8 @@ const flatLinks = [
   }
 
   // Mega-menu (Services)
+  // Split trigger: <a href="/services"> for navigation + <button> for menu.
+  // Hover on the container opens the menu; click on the link navigates.
   const megaToggle = document.getElementById('services-toggle');
   const megaPanel = document.getElementById('services-mega');
   const megaContainer = megaToggle?.parentElement;
@@ -237,11 +245,13 @@ const flatLinks = [
     if (!megaToggle || !megaPanel) return;
     window.clearTimeout(closeTimer);
     megaToggle.setAttribute('aria-expanded', 'true');
+    megaToggle.setAttribute('aria-label', 'Close Services menu');
     megaPanel.classList.add('open');
   };
   const closeMega = () => {
     if (!megaToggle || !megaPanel) return;
     megaToggle.setAttribute('aria-expanded', 'false');
+    megaToggle.setAttribute('aria-label', 'Open Services menu');
     megaPanel.classList.remove('open');
   };
   const closeMegaSoon = () => {
@@ -352,12 +362,34 @@ const flatLinks = [
     border-radius: 2px;
   }
 
-  .mega-toggle .chev {
+  /* Chevron toggle button — sits next to the Services link */
+  .mega-link {
+    padding-right: 0;
+  }
+  .mega-chev-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 0;
+    padding: var(--space-2) 4px var(--space-2) 2px;
+    margin-left: -2px;
+    color: var(--color-ink-500);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .mega-chev-btn:hover {
+    color: var(--color-ink-900);
+  }
+  .mega-chev-btn .chev {
     transition: transform var(--dur-fast) var(--ease-out);
   }
-
-  .mega-toggle[aria-expanded='true'] .chev {
+  .mega-chev-btn[aria-expanded='true'] .chev {
     transform: rotate(180deg);
+  }
+  .has-mega .mega-link.active + .mega-chev-btn {
+    color: var(--color-ink-900);
   }
 
   .cta-wrap {
@@ -438,18 +470,15 @@ const flatLinks = [
     list-style: none;
     padding: 0;
     margin: 0 0 var(--space-4);
-    /* Fixed grid rows keep every row perfectly aligned across the three
-       columns, regardless of how descriptions wrap. Single implicit
-       column enforced so items stack vertically (default grid-auto-flow
-       would place items across implicit columns instead). */
+    /* 2×2 grid per section — 4 items arranged 2 columns × 2 rows. */
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 72px);
-    gap: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(84px, auto);
+    gap: var(--space-2);
   }
 
-  .mega-list li {
-    display: block;
+  .mega-list > li {
+    min-width: 0;
   }
 
   .mega-item {
@@ -457,11 +486,10 @@ const flatLinks = [
     flex-direction: column;
     justify-content: center;
     height: 100%;
-    padding: 0 var(--space-4);
+    padding: var(--space-3);
     border-radius: var(--radius-sm);
     color: var(--color-ink-900);
     transition: background var(--dur-fast) var(--ease-out);
-    overflow: hidden;
   }
 
   .mega-item:hover {
