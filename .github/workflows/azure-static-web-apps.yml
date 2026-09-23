@@ -68,10 +68,11 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BRAVE_GROUND_065B1660F }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: 'upload'
-          app_location: '/'
-          # Astro builds to dist/. We pre-built above, so tell SWA not to
-          # try building again — just upload dist/ as-is.
-          output_location: 'dist'
+          # We build ourselves above (Astro → dist/), so skip Oryx and
+          # point app_location straight at the built output. With
+          # skip_app_build: true, the SWA action ignores output_location
+          # and expects pre-built content at app_location directly.
+          app_location: 'dist'
           skip_app_build: true
 
   close_pull_request_job:
