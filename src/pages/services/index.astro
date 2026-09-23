@@ -1,0 +1,160 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import { services } from '../../data/services';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services' },
+]);
+---
+
+<Layout
+  title="Services — InnovAItion Edge"
+  description="What we build across the Microsoft 365 stack: SharePoint modernization, Teams apps, Power Platform automation, and Azure AI agents."
+>
+  <Fragment slot="head">
+    <JsonLd schema={breadcrumb} />
+  </Fragment>
+
+  <section class="page-hero">
+    <div class="container-narrow">
+      <p class="eyebrow">Services</p>
+      <h1>Four practice areas. One Microsoft&nbsp;365 substrate.</h1>
+      <p class="lede">
+        We do not chase every SaaS trend or ship every framework. Everything
+        we build sits on top of the Microsoft 365 stack you already own — so
+        decisions in one area compound into the next, rather than
+        fragmenting into a zoo of tools nobody has time to maintain.
+      </p>
+    </div>
+  </section>
+
+  <section class="section services-grid-section">
+    <div class="container">
+      <div class="services-grid">
+        {services.map((s) => (
+          <Card
+            href={`/services/${s.slug}`}
+            eyebrow={s.eyebrow}
+            title={s.cardTitle}
+          >
+            <p>{s.cardBody}</p>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section approach-section">
+    <div class="container-narrow">
+      <p class="section-eyebrow">How we deliver</p>
+      <h2>A tight loop, not a slide deck</h2>
+      <div class="approach-grid">
+        <div class="approach-item">
+          <h3>1. Scope with a real success metric</h3>
+          <p>
+            Every engagement starts with the specific workflow, page, or
+            agent that will change — and how we will know it worked. No
+            open-ended "digital transformation" charters.
+          </p>
+        </div>
+        <div class="approach-item">
+          <h3>2. Ship in weeks, not quarters</h3>
+          <p>
+            Engagements are 2–10 weeks depending on service line. First
+            deliverable is always something a real user in your business can
+            actually use — not an architecture document.
+          </p>
+        </div>
+        <div class="approach-item">
+          <h3>3. Hand off with playbooks</h3>
+          <p>
+            We do not create dependency on us. Every engagement ends with
+            documentation, source access, and a playbook your team can
+            extend without another SOW.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+</Layout>
+
+<style>
+  .page-hero {
+    padding: var(--space-20) 0 var(--space-12);
+    background:
+      radial-gradient(ellipse at 30% 0%, rgba(244, 128, 39, 0.08), transparent 60%),
+      linear-gradient(180deg, #fff, var(--color-surface-alt));
+    border-bottom: 1px solid var(--color-border);
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin: 0 0 var(--space-4);
+  }
+  .lede {
+    font-size: var(--fs-lg);
+    color: var(--color-ink-500);
+    max-width: 62ch;
+    margin: var(--space-4) 0 0;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+  @media (max-width: 780px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .section-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin: 0 0 var(--space-3);
+  }
+
+  .approach-section h2 {
+    max-width: 22ch;
+    margin-bottom: var(--space-10);
+  }
+
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+
+  .approach-item h3 {
+    font-size: var(--fs-lg);
+    margin-bottom: var(--space-3);
+  }
+
+  .approach-item p {
+    color: var(--color-ink-500);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 780px) {
+    .approach-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+</style>
