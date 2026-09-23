@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Button from '../components/Button.astro';
 import Card from '../components/Card.astro';
 import CTABanner from '../components/CTABanner.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { organizationSchema } from '../lib/schema';
 
 const services = [
   {
@@ -51,6 +53,10 @@ const values = [
   title="InnovAItion Edge — Microsoft 365 modernization partner"
   description="A Microsoft 365 solutions provider modernizing the enterprise workplace with AI agents, custom Teams and SharePoint apps, and Power Platform automation."
 >
+  <Fragment slot="head">
+    <JsonLd schema={organizationSchema} />
+  </Fragment>
+
   <!-- Hero -->
   <section class="hero">
     <div class="container hero-inner">
