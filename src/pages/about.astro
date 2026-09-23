@@ -1,0 +1,232 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTABanner from '../components/CTABanner.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { breadcrumbSchema } from '../lib/schema';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+]);
+---
+
+<Layout
+  title="About — InnovAItion Edge"
+  description="A small, founder-led Microsoft 365 solutions provider based in Coimbatore. We modernize the M365 workplace with AI agents, custom apps, and Power Platform automation."
+  canonical="/about"
+>
+  <Fragment slot="head">
+    <JsonLd schema={breadcrumb} />
+  </Fragment>
+
+  <section class="page-hero">
+    <div class="container-narrow">
+      <p class="eyebrow">About</p>
+      <h1>A small team betting hard on the Microsoft&nbsp;365 substrate.</h1>
+      <p class="lede">
+        InnovAItion Edge is a Coimbatore-based Microsoft 365 solutions
+        provider. We exist for one reason: to make the M365 platforms
+        enterprises already own — SharePoint, Teams, Power Platform,
+        Azure AI — actually deliver on the promise the license implies.
+      </p>
+    </div>
+  </section>
+
+  <section class="section belief-section" aria-labelledby="belief-h">
+    <div class="container-narrow">
+      <p class="section-eyebrow">What we believe</p>
+      <h2 id="belief-h">Depth on one stack beats surface on ten.</h2>
+      <div class="belief-body">
+        <p>
+          Most enterprise IT estates are running a zoo of SaaS tools bolted
+          on top of an M365 tenant that costs a fortune and does 20% of what
+          it can. Every new productivity problem gets solved by procuring
+          another tool, wiring it into SSO, and adding it to the mental
+          load of the people who have to use it.
+        </p>
+        <p>
+          We think the interesting move is the opposite one: to take the
+          Microsoft platform seriously — SharePoint as a real content
+          system, Teams as a real application surface, Power Platform as a
+          real automation runtime, Azure AI as a real agent platform — and
+          push it to its limits. When you do, most of the "we need a new
+          SaaS for X" pressure quietly disappears.
+        </p>
+        <p>
+          That is what we ship. Every engagement is aimed at replacing
+          spreadsheet-and-email operational drag with something that lives
+          natively where your people already work.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section founder-section" aria-labelledby="founder-h">
+    <div class="container-narrow">
+      <p class="section-eyebrow">Founder note</p>
+      <h2 id="founder-h">Who you are actually talking to</h2>
+      <div class="founder-body">
+        <p>
+          I am <strong>Naveen Prasath Selvaraj</strong>, the founder and
+          builder here. Before starting InnovAItion Edge I spent years
+          embedded in enterprise Microsoft 365 estates — the good, the bad,
+          and the frankly-inherited. That work is the reason this company
+          exists in the shape it does.
+        </p>
+        <p>
+          When you contact us, you get me. Not a scheduling assistant, not
+          a sales development rep, not a solution architect with a slide
+          deck. If we agree to work together, I am one of the people
+          actually building it. That is deliberate — it is the only way to
+          honestly claim the "ship in weeks, not quarters" pitch.
+        </p>
+        <p>
+          I am based in Coimbatore, India, and work with clients globally
+          across time zones. Reply hours are Mon–Fri, 09:00–18:00 IST.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section stance-section" aria-labelledby="stance-h">
+    <div class="container">
+      <div class="stance-head">
+        <p class="section-eyebrow">Our stance</p>
+        <h2 id="stance-h">Three things we will not do</h2>
+      </div>
+      <div class="stance-grid">
+        <div class="stance">
+          <h3>Ship a slide-deck engagement</h3>
+          <p>
+            Every project ends with running software your team is using —
+            not a PDF and a handover. If you want an assessment, there are
+            better firms for that.
+          </p>
+        </div>
+        <div class="stance">
+          <h3>Chase every AI trend</h3>
+          <p>
+            We build Azure AI + Copilot Studio because they live in the
+            same tenant, same permission model, same identity as everything
+            else we ship. We will not add a third vector database if
+            Azure AI Search already fits.
+          </p>
+        </div>
+        <div class="stance">
+          <h3>Grow into an account layer</h3>
+          <p>
+            We stay small on purpose. The moment there is an account
+            manager between you and the person writing the code, the
+            engagement stops working the way it works today.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    heading="Curious if we are the right fit?"
+    subheading="A 30-minute discovery call is enough to know. We will tell you honestly if we are — and if not, where to look."
+    ctaLabel="Book a discovery call"
+  />
+</Layout>
+
+<style>
+  .page-hero {
+    padding: var(--space-20) 0 var(--space-12);
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(244, 128, 39, 0.08), transparent 60%),
+      linear-gradient(180deg, #fff, var(--color-surface-alt));
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin: 0 0 var(--space-4);
+  }
+
+  .page-hero h1 {
+    max-width: 22ch;
+  }
+
+  .lede {
+    font-size: var(--fs-lg);
+    color: var(--color-ink-500);
+    max-width: 60ch;
+    margin: var(--space-6) 0 0;
+    line-height: 1.6;
+  }
+
+  .section-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin: 0 0 var(--space-3);
+  }
+
+  .belief-section h2,
+  .founder-section h2 {
+    max-width: 22ch;
+    margin-bottom: var(--space-6);
+  }
+
+  .belief-body p,
+  .founder-body p {
+    font-size: var(--fs-md);
+    color: var(--color-ink-500);
+    line-height: 1.7;
+    margin: 0 0 var(--space-4);
+    max-width: 62ch;
+  }
+
+  .belief-body p:last-child,
+  .founder-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .founder-body strong {
+    color: var(--color-ink-900);
+  }
+
+  .founder-section {
+    background: var(--color-surface-alt);
+    border-block: 1px solid var(--color-border);
+  }
+
+  /* Stance */
+  .stance-head {
+    max-width: 720px;
+    margin-bottom: var(--space-10);
+  }
+
+  .stance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+
+  .stance h3 {
+    font-size: var(--fs-lg);
+    margin: 0 0 var(--space-3);
+  }
+
+  .stance p {
+    color: var(--color-ink-500);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 780px) {
+    .stance-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+</style>
