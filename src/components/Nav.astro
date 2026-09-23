@@ -10,33 +10,30 @@ const megaSections = {
     heading: 'Practice areas',
     linkTo: '/services',
     items: [
-      { href: '/services/sharepoint',       label: 'SharePoint modernization', desc: 'Modern intranets, SPFx, hub sites, search' },
-      { href: '/services/teams',            label: 'Teams apps',                desc: 'Adaptive Cards, message extensions, bots' },
-      { href: '/services/power-platform',   label: 'Power Platform',            desc: 'Automate, Apps, Pages, Copilot Studio' },
-      { href: '/services/azure-ai',         label: 'Azure AI agents',           desc: 'Copilot Studio, RAG, evaluation' },
+      { href: '/services/sharepoint',     label: 'SharePoint modernization', desc: 'Modern intranets, SPFx, hub sites, search' },
+      { href: '/services/teams',          label: 'Teams apps',                desc: 'Adaptive Cards, message extensions, bots' },
+      { href: '/services/power-platform', label: 'Power Platform',            desc: 'Automate, Apps, Pages, Copilot Studio' },
+      { href: '/services/azure-ai',       label: 'Azure AI agents',           desc: 'Copilot Studio, RAG, evaluation' },
     ],
   },
   solutions: {
     heading: 'What we deliver',
     linkTo: '/services',
     items: [
-      { href: '/services/sharepoint',       label: 'Modern SharePoint intranets',    desc: 'End-to-end classic-to-modern migration' },
-      { href: '/services/power-platform',   label: 'Approval workflow automation',   desc: 'Email-chain retirement, audit trail' },
-      { href: '/services/teams',            label: 'Line-of-business Teams apps',    desc: 'First-class Teams surfaces, not iframes' },
-      { href: '/services/azure-ai',         label: 'AI knowledge assistants',        desc: 'Copilot Studio agents grounded in Graph' },
-      { href: '/services/power-platform',   label: 'Custom Power Apps',              desc: 'Canvas + model-driven, mobile-first' },
-      { href: '/services/power-platform',   label: 'BI dashboards & reporting',      desc: 'Power BI, semantic model, distribution' },
+      { href: '/services/azure-ai',       label: 'AI knowledge assistants',       desc: 'Copilot Studio agents grounded in Graph' },
+      { href: '/services/sharepoint',     label: 'Modern SharePoint intranets',   desc: 'End-to-end classic-to-modern migration' },
+      { href: '/services/teams',          label: 'Line-of-business Teams apps',   desc: 'First-class Teams surfaces, not iframes' },
+      { href: '/services/power-platform', label: 'Automation & BI',               desc: 'Power Automate, Apps, BI on Dataverse' },
     ],
   },
   technology: {
     heading: 'Technology',
     linkTo: '/technology',
     items: [
-      { href: '/technology', label: 'Microsoft 365 Core',           desc: 'SharePoint, Teams, OneDrive, Graph' },
-      { href: '/technology', label: 'Power Platform stack',         desc: 'Apps, Automate, BI, Copilot Studio' },
-      { href: '/technology', label: 'Azure & AI',                   desc: 'Azure OpenAI, AI Search, Bot Service' },
-      { href: '/technology', label: 'Dev stack',                    desc: 'SPFx, Teams Toolkit, .NET, TypeScript' },
-      { href: '/technology', label: 'Identity & security',          desc: 'Entra ID, Conditional Access, Purview' },
+      { href: '/technology#azure-ai',       label: 'Azure & AI',           desc: 'Azure OpenAI, AI Search, Bot Service' },
+      { href: '/technology#m365-core',      label: 'Microsoft 365 Core',   desc: 'SharePoint, Teams, OneDrive, Graph' },
+      { href: '/technology#power-platform', label: 'Power Platform stack', desc: 'Apps, Automate, BI, Copilot Studio' },
+      { href: '/technology#dev-stack',      label: 'Dev stack',            desc: 'SPFx, Teams Toolkit, .NET, TypeScript' },
     ],
   },
 };
@@ -400,8 +397,14 @@ const flatLinks = [
 
   .mega-grid {
     display: grid;
-    grid-template-columns: 1fr 1.2fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-10);
+    align-items: start;
+  }
+
+  .mega-grid > section {
+    display: flex;
+    flex-direction: column;
   }
 
   .mega-heading {

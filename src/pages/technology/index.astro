@@ -39,7 +39,7 @@ const breadcrumb = breadcrumbSchema([
     <div class="container">
       <div class="pillars-stack">
         {pillars.map((pillar) => (
-          <article class="pillar">
+          <article class="pillar" id={pillar.slug}>
             <header class="pillar-head">
               <p class="pillar-eyebrow">{pillar.eyebrow}</p>
               <h2>{pillar.title}</h2>
@@ -137,6 +137,8 @@ const breadcrumb = breadcrumbSchema([
     gap: var(--space-12);
     align-items: start;
     padding-block: var(--space-8);
+    /* Compensate for sticky header when anchor-jumping to a pillar */
+    scroll-margin-top: calc(var(--header-height) + var(--space-4));
   }
 
   .pillar + .pillar {

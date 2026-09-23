@@ -122,29 +122,29 @@ const values = [
 
       <!-- Decorative M365 pillar grid -->
       <div class="hero-visual" aria-hidden="true">
-        <div class="pillar-badge" style="--i:0">
+        <div class="pillar-badge">
           <span class="pillar-mark" style="background: linear-gradient(135deg,#038387,#03838799);">SP</span>
           <span>SharePoint</span>
         </div>
-        <div class="pillar-badge" style="--i:1">
-          <span class="pillar-mark" style="background: linear-gradient(135deg,#4b53bc,#4b53bc99);">T</span>
-          <span>Teams</span>
-        </div>
-        <div class="pillar-badge" style="--i:2">
-          <span class="pillar-mark" style="background: linear-gradient(135deg,#742774,#74277499);">P</span>
-          <span>Power Platform</span>
-        </div>
-        <div class="pillar-badge" style="--i:3">
+        <div class="pillar-badge">
           <span class="pillar-mark" style="background: linear-gradient(135deg,#0078d4,#0078d499);">AI</span>
           <span>Azure AI</span>
         </div>
-        <div class="pillar-badge" style="--i:4">
+        <div class="pillar-badge">
+          <span class="pillar-mark" style="background: linear-gradient(135deg,#4b53bc,#4b53bc99);">T</span>
+          <span>Teams</span>
+        </div>
+        <div class="pillar-badge">
+          <span class="pillar-mark" style="background: linear-gradient(135deg,#0d47a1,#0d47a199);">CS</span>
+          <span>Copilot Studio</span>
+        </div>
+        <div class="pillar-badge">
+          <span class="pillar-mark" style="background: linear-gradient(135deg,#742774,#74277499);">P</span>
+          <span>Power Platform</span>
+        </div>
+        <div class="pillar-badge">
           <span class="pillar-mark" style="background: linear-gradient(135deg,#7fba00,#7fba0099);">MG</span>
           <span>Graph</span>
-        </div>
-        <div class="pillar-badge" style="--i:5">
-          <span class="pillar-mark" style="background: linear-gradient(135deg,#00bcf2,#00bcf299);">EN</span>
-          <span>Entra ID</span>
         </div>
       </div>
     </div>
@@ -310,14 +310,11 @@ const values = [
     font-size: var(--fs-sm);
     font-weight: 500;
     color: var(--color-ink-900);
-    transform: translateY(calc(var(--i) * -3px));
     transition: transform var(--dur-med) var(--ease-out),
                 box-shadow var(--dur-med) var(--ease-out);
   }
-  .pillar-badge:nth-child(even) {
-    transform: translateY(calc(var(--i) * -3px + 12px));
-  }
   .pillar-badge:hover {
+    transform: translateY(-2px);
     box-shadow: var(--shadow-2);
   }
   .pillar-mark {
@@ -342,9 +339,6 @@ const values = [
     .hero-visual {
       grid-template-columns: repeat(3, 1fr);
       max-width: 480px;
-    }
-    .pillar-badge {
-      transform: none !important;
     }
   }
 

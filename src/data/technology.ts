@@ -5,6 +5,7 @@ export interface TechItem {
 }
 
 export interface TechPillar {
+  slug: string;
   eyebrow: string;
   title: string;
   body: string;
@@ -14,6 +15,7 @@ export interface TechPillar {
 // Colors sampled from Microsoft product brand pages, used for identification only.
 export const pillars: TechPillar[] = [
   {
+    slug: 'm365-core',
     eyebrow: 'Foundation',
     title: 'Microsoft 365 core',
     body: 'The tenant-level surfaces most enterprises already own — where we spend most of our time turning licenses into shipped outcomes.',
@@ -27,6 +29,7 @@ export const pillars: TechPillar[] = [
     ],
   },
   {
+    slug: 'dev-stack',
     eyebrow: 'Custom apps',
     title: 'Development stack',
     body: 'The frameworks and languages we use to extend Microsoft 365 with real, first-class experiences — not iframed refugees.',
@@ -42,6 +45,7 @@ export const pillars: TechPillar[] = [
     ],
   },
   {
+    slug: 'power-platform',
     eyebrow: 'Automation',
     title: 'Power Platform',
     body: 'Low-code and pro-code delivery for the operational drag — from citizen-developer flows to model-driven apps built on enterprise governance.',
@@ -56,6 +60,7 @@ export const pillars: TechPillar[] = [
     ],
   },
   {
+    slug: 'azure-ai',
     eyebrow: 'AI & cloud',
     title: 'Azure & Azure AI',
     body: 'Where our AI agents actually run — grounded in Microsoft Graph, deployed to the tenant, monitored with proper evaluation and telemetry.',
@@ -71,6 +76,7 @@ export const pillars: TechPillar[] = [
     ],
   },
   {
+    slug: 'identity',
     eyebrow: 'Security & governance',
     title: 'Identity, security & compliance',
     body: 'The plumbing every enterprise M365 project depends on — configured to your policy, not left as a default.',
@@ -84,6 +90,7 @@ export const pillars: TechPillar[] = [
     ],
   },
   {
+    slug: 'data-integration',
     eyebrow: 'Data & integration',
     title: 'Data & integration',
     body: 'Where M365 meets the systems your business actually runs on — SAP, on-prem SQL, legacy APIs, and the databases behind them.',
