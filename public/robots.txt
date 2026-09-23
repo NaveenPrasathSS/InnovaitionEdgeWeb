@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://innovaitionedge.com/sitemap.xml
-
-
+Sitemap: https://innovaitionedge.com/sitemap-index.xml
