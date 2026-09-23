@@ -3,14 +3,49 @@ import Button from './Button.astro';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 
-const links = [
-  { href: '/services', label: 'Services' },
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+
+const megaSections = {
+  practice: {
+    heading: 'Practice areas',
+    linkTo: '/services',
+    items: [
+      { href: '/services/sharepoint',       label: 'SharePoint modernization', desc: 'Modern intranets, SPFx, hub sites, search' },
+      { href: '/services/teams',            label: 'Teams apps',                desc: 'Adaptive Cards, message extensions, bots' },
+      { href: '/services/power-platform',   label: 'Power Platform',            desc: 'Automate, Apps, Pages, Copilot Studio' },
+      { href: '/services/azure-ai',         label: 'Azure AI agents',           desc: 'Copilot Studio, RAG, evaluation' },
+    ],
+  },
+  solutions: {
+    heading: 'What we deliver',
+    linkTo: '/services',
+    items: [
+      { href: '/services/sharepoint',       label: 'Modern SharePoint intranets',    desc: 'End-to-end classic-to-modern migration' },
+      { href: '/services/power-platform',   label: 'Approval workflow automation',   desc: 'Email-chain retirement, audit trail' },
+      { href: '/services/teams',            label: 'Line-of-business Teams apps',    desc: 'First-class Teams surfaces, not iframes' },
+      { href: '/services/azure-ai',         label: 'AI knowledge assistants',        desc: 'Copilot Studio agents grounded in Graph' },
+      { href: '/services/power-platform',   label: 'Custom Power Apps',              desc: 'Canvas + model-driven, mobile-first' },
+      { href: '/services/power-platform',   label: 'BI dashboards & reporting',      desc: 'Power BI, semantic model, distribution' },
+    ],
+  },
+  technology: {
+    heading: 'Technology',
+    linkTo: '/technology',
+    items: [
+      { href: '/technology', label: 'Microsoft 365 Core',           desc: 'SharePoint, Teams, OneDrive, Graph' },
+      { href: '/technology', label: 'Power Platform stack',         desc: 'Apps, Automate, BI, Copilot Studio' },
+      { href: '/technology', label: 'Azure & AI',                   desc: 'Azure OpenAI, AI Search, Bot Service' },
+      { href: '/technology', label: 'Dev stack',                    desc: 'SPFx, Teams Toolkit, .NET, TypeScript' },
+      { href: '/technology', label: 'Identity & security',          desc: 'Entra ID, Conditional Access, Purview' },
+    ],
+  },
+};
+
+const flatLinks = [
   { href: '/technology', label: 'Technology' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
-
-const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
 ---
 
 <a href="#main" class="skip-link">Skip to content</a>
@@ -23,7 +58,85 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
 
     <nav aria-label="Main navigation" class="primary-nav">
       <ul>
-        {links.map(({ href, label }) => (
+        <!-- Services with mega-menu -->
+        <li class="has-mega">
+          <button
+            type="button"
+            class:list={['nav-link', 'mega-toggle', { active: isActive('/services') }]}
+            id="services-toggle"
+            aria-expanded="false"
+            aria-controls="services-mega"
+            aria-haspopup="true"
+          >
+            Services
+            <svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+              <path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <div id="services-mega" class="mega-panel" role="menu" aria-labelledby="services-toggle">
+            <div class="container mega-grid">
+              <section>
+                <a href={megaSections.practice.linkTo} class="mega-heading">
+                  {megaSections.practice.heading}
+                  <span aria-hidden="true">→</span>
+                </a>
+                <ul class="mega-list">
+                  {megaSections.practice.items.map((item) => (
+                    <li>
+                      <a href={item.href} class="mega-item" role="menuitem">
+                        <span class="mega-item-title">{item.label}</span>
+                        <span class="mega-item-desc">{item.desc}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section>
+                <a href={megaSections.solutions.linkTo} class="mega-heading">
+                  {megaSections.solutions.heading}
+                  <span aria-hidden="true">→</span>
+                </a>
+                <ul class="mega-list">
+                  {megaSections.solutions.items.map((item) => (
+                    <li>
+                      <a href={item.href} class="mega-item" role="menuitem">
+                        <span class="mega-item-title">{item.label}</span>
+                        <span class="mega-item-desc">{item.desc}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section class="mega-tech-col">
+                <a href={megaSections.technology.linkTo} class="mega-heading">
+                  {megaSections.technology.heading}
+                  <span aria-hidden="true">→</span>
+                </a>
+                <ul class="mega-list">
+                  {megaSections.technology.items.map((item) => (
+                    <li>
+                      <a href={item.href} class="mega-item" role="menuitem">
+                        <span class="mega-item-title">{item.label}</span>
+                        <span class="mega-item-desc">{item.desc}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+
+                <a href="/contact" class="mega-cta-panel">
+                  <p class="mega-cta-eyebrow">Not sure where to start?</p>
+                  <p class="mega-cta-title">Book a 30-min discovery call</p>
+                  <span class="mega-cta-arrow" aria-hidden="true">→</span>
+                </a>
+              </section>
+            </div>
+          </div>
+        </li>
+
+        {flatLinks.map(({ href, label }) => (
           <li>
             <a
               href={href}
@@ -55,27 +168,52 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
     </button>
   </div>
 
+  <!-- Mobile nav -->
   <nav id="mobile-nav" aria-label="Mobile navigation" class="mobile-nav" hidden>
-    <ul>
-      {links.map(({ href, label }) => (
+    <div class="container">
+      <ul class="mobile-list">
         <li>
-          <a
-            href={href}
-            class:list={['mobile-link', { active: isActive(href) }]}
-            aria-current={isActive(href) ? 'page' : undefined}
-          >
-            {label}
-          </a>
+          <details class="mobile-details">
+            <summary class="mobile-link mobile-link-summary">
+              Services
+              <svg width="14" height="14" viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </summary>
+            <ul class="mobile-sub">
+              <li><a href="/services" class="mobile-sublink mobile-sublink-root">All services →</a></li>
+              {megaSections.practice.items.map((item) => (
+                <li>
+                  <a href={item.href} class="mobile-sublink">
+                    <span>{item.label}</span>
+                    <span class="mobile-sublink-desc">{item.desc}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
         </li>
-      ))}
-      <li>
-        <a href="/contact" class="mobile-cta">Talk to us →</a>
-      </li>
-    </ul>
+        {flatLinks.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class:list={['mobile-link', { active: isActive(href) }]}
+              aria-current={isActive(href) ? 'page' : undefined}
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a href="/contact" class="mobile-cta">Talk to us →</a>
+        </li>
+      </ul>
+    </div>
   </nav>
 </header>
 
 <script>
+  // Mobile drawer
   const btn = document.getElementById('nav-toggle');
   const menu = document.getElementById('mobile-nav');
   if (btn && menu) {
@@ -88,6 +226,56 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
         menu.setAttribute('hidden', '');
       } else {
         menu.removeAttribute('hidden');
+      }
+    });
+  }
+
+  // Mega-menu (Services)
+  const megaToggle = document.getElementById('services-toggle');
+  const megaPanel = document.getElementById('services-mega');
+  const megaContainer = megaToggle?.parentElement;
+  let closeTimer: number | undefined;
+
+  const openMega = () => {
+    if (!megaToggle || !megaPanel) return;
+    window.clearTimeout(closeTimer);
+    megaToggle.setAttribute('aria-expanded', 'true');
+    megaPanel.classList.add('open');
+  };
+  const closeMega = () => {
+    if (!megaToggle || !megaPanel) return;
+    megaToggle.setAttribute('aria-expanded', 'false');
+    megaPanel.classList.remove('open');
+  };
+  const closeMegaSoon = () => {
+    closeTimer = window.setTimeout(closeMega, 150);
+  };
+
+  if (megaToggle && megaPanel && megaContainer) {
+    megaToggle.addEventListener('click', (event) => {
+      event.preventDefault();
+      const expanded = megaToggle.getAttribute('aria-expanded') === 'true';
+      if (expanded) closeMega();
+      else openMega();
+    });
+    megaContainer.addEventListener('mouseenter', openMega);
+    megaContainer.addEventListener('mouseleave', closeMegaSoon);
+    megaPanel.addEventListener('mouseenter', openMega);
+    megaPanel.addEventListener('mouseleave', closeMegaSoon);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && megaToggle.getAttribute('aria-expanded') === 'true') {
+        closeMega();
+        megaToggle.focus();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      const target = event.target as Node;
+      if (
+        megaToggle.getAttribute('aria-expanded') === 'true' &&
+        !megaContainer.contains(target) &&
+        !megaPanel.contains(target)
+      ) {
+        closeMega();
       }
     });
   }
@@ -132,11 +320,17 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
   }
 
   .nav-link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     padding: var(--space-2) var(--space-1);
     font-size: var(--fs-sm);
     font-weight: 500;
     color: var(--color-ink-700);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
     position: relative;
   }
 
@@ -161,10 +355,184 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
     border-radius: 2px;
   }
 
+  .mega-toggle .chev {
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .mega-toggle[aria-expanded='true'] .chev {
+    transform: rotate(180deg);
+  }
+
   .cta-wrap {
     display: inline-flex;
   }
 
+  /* ── Mega panel ────────────────────────────────────────── */
+  .has-mega {
+    position: static;
+  }
+
+  .mega-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-2);
+    padding: var(--space-8) 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity var(--dur-med) var(--ease-out),
+                transform var(--dur-med) var(--ease-out),
+                visibility var(--dur-med) var(--ease-out);
+  }
+
+  .mega-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mega-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: var(--space-10);
+  }
+
+  .mega-heading {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    color: var(--color-primary-700);
+    margin-bottom: var(--space-4);
+    text-decoration: none;
+  }
+
+  .mega-heading:hover {
+    color: var(--color-primary-cta-hover);
+    text-decoration: none;
+  }
+
+  .mega-heading span {
+    font-weight: 500;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .mega-heading:hover span {
+    transform: translateX(3px);
+  }
+
+  .mega-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .mega-item {
+    display: block;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-900);
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+
+  .mega-item:hover {
+    background: var(--color-surface-alt);
+    text-decoration: none;
+  }
+
+  .mega-item-title {
+    display: block;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--color-ink-900);
+    margin-bottom: 2px;
+  }
+
+  .mega-item-desc {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--color-ink-500);
+    line-height: 1.4;
+  }
+
+  .mega-cta-panel {
+    display: block;
+    margin-top: var(--space-4);
+    padding: var(--space-5);
+    background: linear-gradient(135deg, var(--color-ink-900), #1e293b);
+    border-radius: var(--radius);
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mega-cta-panel::before {
+    content: '';
+    position: absolute;
+    inset: -50% -20% auto auto;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(ellipse, rgba(244, 128, 39, 0.14), transparent 60%);
+    pointer-events: none;
+  }
+
+  .mega-cta-panel:hover {
+    text-decoration: none;
+    color: #ffffff;
+  }
+
+  .mega-cta-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 var(--space-2);
+    position: relative;
+    z-index: 1;
+  }
+
+  .mega-cta-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.3;
+    max-width: 20ch;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mega-cta-arrow {
+    position: absolute;
+    right: var(--space-5);
+    bottom: var(--space-5);
+    color: var(--color-primary);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    z-index: 1;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .mega-cta-panel:hover .mega-cta-arrow {
+    transform: translateX(3px);
+  }
+
+  /* ── Mobile toggle ─────────────────────────────────────── */
   .nav-toggle {
     display: none;
     background: transparent;
@@ -192,23 +560,28 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
   .nav-toggle.is-open .bar:nth-child(2) { opacity: 0; }
   .nav-toggle.is-open .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+  /* ── Mobile nav ────────────────────────────────────────── */
   .mobile-nav {
     border-top: 1px solid var(--color-border);
     background: var(--color-surface);
+    max-height: calc(100vh - var(--header-height));
+    overflow-y: auto;
   }
 
-  .mobile-nav ul {
+  .mobile-list {
     list-style: none;
     margin: 0;
-    padding: var(--space-4) var(--space-6);
+    padding: var(--space-4) 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--space-1);
   }
 
   .mobile-link {
-    display: block;
-    padding: var(--space-3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
     font-size: var(--fs-md);
     font-weight: 500;
     color: var(--color-ink-700);
@@ -222,6 +595,62 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
     text-decoration: none;
   }
 
+  .mobile-details summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .mobile-details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-details[open] .mobile-link-summary svg {
+    transform: rotate(180deg);
+  }
+
+  .mobile-link-summary svg {
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .mobile-sub {
+    list-style: none;
+    margin: var(--space-2) 0 var(--space-2) var(--space-4);
+    padding: var(--space-2) 0 var(--space-2) var(--space-4);
+    border-left: 2px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .mobile-sublink {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-900);
+    font-weight: 500;
+    font-size: var(--fs-sm);
+  }
+
+  .mobile-sublink:hover {
+    background: var(--color-surface-alt);
+    text-decoration: none;
+    color: var(--color-ink-900);
+  }
+
+  .mobile-sublink-root {
+    color: var(--color-primary-700);
+    font-weight: 600;
+  }
+
+  .mobile-sublink-desc {
+    color: var(--color-ink-500);
+    font-size: var(--fs-xs);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
   .mobile-cta {
     display: block;
     padding: var(--space-3) var(--space-4);
@@ -230,7 +659,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
     border-radius: var(--radius);
     font-weight: 600;
     text-align: center;
-    margin-top: var(--space-2);
+    margin-top: var(--space-3);
   }
 
   .mobile-cta:hover {
@@ -246,6 +675,9 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
     }
     .nav-toggle {
       display: flex;
+    }
+    .mega-panel {
+      display: none;
     }
   }
 </style>

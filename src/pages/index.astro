@@ -33,6 +33,45 @@ const services = [
   },
 ];
 
+const solutions = [
+  {
+    icon: 'M4 4h16v12H4z M2 20h20',
+    title: 'Modern Workplace',
+    body: 'Microsoft 365, Teams and SharePoint configured for the way your business actually works — secure collaboration, real search, and content architecture your people trust.',
+    tags: ['SharePoint', 'Teams', 'OneDrive'],
+  },
+  {
+    icon: 'M13 2L3 14h9l-1 8l10-12h-9z',
+    title: 'Low-Code Automation',
+    body: 'Power Apps and Power Automate flows that retire the spreadsheet-and-email drag — approvals, requests, and case management built on Dataverse.',
+    tags: ['Power Apps', 'Automate', 'Dataverse'],
+  },
+  {
+    icon: 'M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10s10-4.5 10-10S17.5 2 12 2z M12 6v6l4 2',
+    title: 'AI Knowledge Assistants',
+    body: 'Copilot Studio and Azure AI Foundry agents grounded in your Graph — assistants that answer from your SharePoint, Teams, and OneDrive with proper permission trimming.',
+    tags: ['Copilot Studio', 'Azure OpenAI', 'RAG'],
+  },
+  {
+    icon: 'M3 3h18v18H3z M3 9h18 M9 21V9',
+    title: 'Custom Teams Apps',
+    body: 'Line-of-business Teams apps built as first-class experiences — Adaptive Cards, message extensions, meeting apps, Bot Framework integrations, and SSO.',
+    tags: ['Teams Toolkit', 'Adaptive Cards', 'Bot Framework'],
+  },
+  {
+    icon: 'M12 2v20 M2 12h20',
+    title: 'SharePoint Modernization',
+    body: 'End-to-end classic-to-modern migrations with SPFx web parts, hub site architecture, search reindexing, and governance your records team signs off on.',
+    tags: ['SPFx', 'Hub sites', 'SharePoint Search'],
+  },
+  {
+    icon: 'M3 12l3-3l3 3l3-3l3 3l3-3l3 3v9H3z',
+    title: 'BI & Reporting',
+    body: 'Power BI dashboards on top of a proper semantic model — connected to Dataverse, Graph, and your line-of-business SQL, distributed via SharePoint or Teams.',
+    tags: ['Power BI', 'Semantic model', 'Dataverse'],
+  },
+];
+
 const values = [
   {
     heading: 'We dogfood the pitch',
@@ -60,33 +99,95 @@ const values = [
   <!-- Hero -->
   <section class="hero">
     <div class="container hero-inner">
-      <p class="eyebrow">Microsoft 365 Solutions Provider · Coimbatore</p>
-      <h1>
-        We modernize the Microsoft&nbsp;365 workplace with
-        <span class="hero-accent">AI agents</span>, custom Teams &amp; SharePoint apps,
-        and Power Platform automation.
-      </h1>
-      <p class="lede">
-        Enterprise IT leaders bring us in when their M365 estate needs to stop
-        being a bundle of licenses and start being an operational advantage.
-      </p>
-      <div class="hero-actions">
-        <Button href="/contact" variant="primary" size="lg">Book a discovery call</Button>
-        <Button href="/services" variant="secondary" size="lg">See what we do</Button>
+      <div class="hero-copy">
+        <p class="eyebrow">Microsoft 365 Solutions Provider</p>
+        <h1>
+          Turn Microsoft&nbsp;365 into an
+          <span class="hero-accent">operational advantage</span>.
+        </h1>
+        <p class="lede">
+          We modernize the enterprise workplace with AI agents, custom Teams &amp;
+          SharePoint apps, and Power Platform automation — built on the M365
+          substrate you already own, delivered in weeks, not quarters.
+        </p>
+        <div class="hero-actions">
+          <Button href="/contact" variant="primary" size="lg">Book a discovery call</Button>
+          <Button href="/services" variant="secondary" size="lg">Explore services</Button>
+        </div>
+        <p class="hero-note">
+          <span aria-hidden="true">↳</span>
+          Typical engagements ship in 4–8 weeks on the M365 stack you already own.
+        </p>
       </div>
-      <p class="hero-note">
-        <span aria-hidden="true">↳</span>
-        Typical engagements ship in 4–8 weeks, on the Microsoft 365 substrate you already own.
-      </p>
+
+      <!-- Decorative M365 pillar grid -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="pillar-badge" style="--i:0">
+          <span class="pillar-mark" style="background: linear-gradient(135deg,#038387,#03838799);">SP</span>
+          <span>SharePoint</span>
+        </div>
+        <div class="pillar-badge" style="--i:1">
+          <span class="pillar-mark" style="background: linear-gradient(135deg,#4b53bc,#4b53bc99);">T</span>
+          <span>Teams</span>
+        </div>
+        <div class="pillar-badge" style="--i:2">
+          <span class="pillar-mark" style="background: linear-gradient(135deg,#742774,#74277499);">P</span>
+          <span>Power Platform</span>
+        </div>
+        <div class="pillar-badge" style="--i:3">
+          <span class="pillar-mark" style="background: linear-gradient(135deg,#0078d4,#0078d499);">AI</span>
+          <span>Azure AI</span>
+        </div>
+        <div class="pillar-badge" style="--i:4">
+          <span class="pillar-mark" style="background: linear-gradient(135deg,#7fba00,#7fba0099);">MG</span>
+          <span>Graph</span>
+        </div>
+        <div class="pillar-badge" style="--i:5">
+          <span class="pillar-mark" style="background: linear-gradient(135deg,#00bcf2,#00bcf299);">EN</span>
+          <span>Entra ID</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Capabilities -->
+  <!-- Solutions we deliver -->
+  <section class="section solutions" aria-labelledby="solutions-h">
+    <div class="container">
+      <header class="section-head">
+        <p class="section-eyebrow">Key solutions</p>
+        <h2 id="solutions-h">Six kinds of outcomes we ship on the Microsoft&nbsp;365 stack</h2>
+        <p class="section-sub">
+          Every engagement lands one of these — sometimes bundled, sometimes
+          standalone. Each is grounded in the platforms your enterprise
+          already owns.
+        </p>
+      </header>
+
+      <div class="solutions-grid">
+        {solutions.map((sol) => (
+          <article class="solution-card">
+            <span class="solution-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d={sol.icon} />
+              </svg>
+            </span>
+            <h3>{sol.title}</h3>
+            <p>{sol.body}</p>
+            <ul class="solution-tags" aria-label="Technology tags">
+              {sol.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities (practice areas) -->
   <section class="section capabilities" aria-labelledby="capabilities-h">
     <div class="container">
       <header class="section-head">
-        <p class="section-eyebrow">What we do</p>
-        <h2 id="capabilities-h">Four practice areas, one Microsoft 365 substrate</h2>
+        <p class="section-eyebrow">Practice areas</p>
+        <h2 id="capabilities-h">Four practice areas, one Microsoft&nbsp;365 substrate</h2>
         <p class="section-sub">
           We build across the M365 stack — but always with the same underlying
           bet: that Microsoft's platform depth, applied deliberately, beats a
@@ -127,12 +228,13 @@ const values = [
 </Layout>
 
 <style>
-  /* Hero */
+  /* ── Hero ─────────────────────────────────────────────── */
   .hero {
     position: relative;
     padding: var(--space-24) 0 var(--space-16);
     background:
-      radial-gradient(ellipse at 20% -10%, rgba(244, 128, 39, 0.10), transparent 55%),
+      radial-gradient(ellipse at 10% -10%, rgba(244, 128, 39, 0.12), transparent 55%),
+      radial-gradient(ellipse at 95% 20%, rgba(75, 83, 188, 0.08), transparent 55%),
       linear-gradient(180deg, #fff, var(--color-surface-alt));
     overflow: hidden;
   }
@@ -145,7 +247,10 @@ const values = [
     pointer-events: none;
   }
   .hero-inner {
-    max-width: 940px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
     position: relative;
   }
   .eyebrow {
@@ -157,15 +262,18 @@ const values = [
     margin: 0 0 var(--space-5);
   }
   .hero h1 {
-    max-width: 22ch;
+    max-width: 20ch;
   }
   .hero-accent {
-    color: var(--color-primary-700);
+    background: linear-gradient(120deg, var(--color-primary), var(--color-primary-cta));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   .lede {
     font-size: var(--fs-lg);
     color: var(--color-ink-500);
-    max-width: 60ch;
+    max-width: 58ch;
     margin: var(--space-6) 0 var(--space-8);
   }
   .hero-actions {
@@ -183,7 +291,64 @@ const values = [
     gap: var(--space-2);
   }
 
-  /* Section shared */
+  /* Hero visual — decorative pillar grid */
+  .hero-visual {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    align-content: center;
+  }
+  .pillar-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--color-ink-900);
+    transform: translateY(calc(var(--i) * -3px));
+    transition: transform var(--dur-med) var(--ease-out),
+                box-shadow var(--dur-med) var(--ease-out);
+  }
+  .pillar-badge:nth-child(even) {
+    transform: translateY(calc(var(--i) * -3px + 12px));
+  }
+  .pillar-badge:hover {
+    box-shadow: var(--shadow-2);
+  }
+  .pillar-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 var(--space-2);
+    border-radius: 8px;
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.75rem;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.14);
+  }
+
+  @media (max-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+    .hero-visual {
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 480px;
+    }
+    .pillar-badge {
+      transform: none !important;
+    }
+  }
+
+  /* ── Section shared ──────────────────────────────────── */
   .section-head {
     max-width: 720px;
     margin-bottom: var(--space-12);
@@ -201,25 +366,95 @@ const values = [
     color: var(--color-ink-500);
     margin: var(--space-4) 0 0;
     line-height: 1.6;
+    max-width: 62ch;
   }
 
-  /* Capabilities */
+  /* ── Solutions ─────────────────────────────────────── */
+  .solutions {
+    background:
+      radial-gradient(ellipse at 85% 20%, rgba(244, 128, 39, 0.05), transparent 60%),
+      var(--color-surface);
+  }
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+  .solution-card {
+    padding: var(--space-8);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: transform var(--dur-med) var(--ease-out),
+                border-color var(--dur-med) var(--ease-out),
+                box-shadow var(--dur-med) var(--ease-out);
+  }
+  .solution-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-2);
+  }
+  .solution-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--color-primary-050), rgba(244, 128, 39, 0.18));
+    color: var(--color-primary-cta);
+    margin-bottom: var(--space-5);
+  }
+  .solution-card h3 {
+    font-size: var(--fs-lg);
+    margin: 0 0 var(--space-3);
+  }
+  .solution-card p {
+    color: var(--color-ink-500);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: 0 0 var(--space-5);
+  }
+  .solution-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .solution-tags li {
+    font-size: var(--fs-xs);
+    color: var(--color-ink-500);
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-weight: 500;
+  }
+
+  @media (max-width: 900px) {
+    .solutions-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 620px) {
+    .solutions-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Capabilities ────────────────────────────────────── */
+  .capabilities {
+    background: var(--color-surface-alt);
+    border-block: 1px solid var(--color-border);
+  }
   .capability-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-6);
   }
   @media (max-width: 780px) {
-    .capability-grid {
-      grid-template-columns: 1fr;
-    }
+    .capability-grid { grid-template-columns: 1fr; }
   }
 
-  /* Values */
-  .values {
-    background: var(--color-surface-alt);
-    border-block: 1px solid var(--color-border);
-  }
+  /* ── Values ──────────────────────────────────────────── */
   .value-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
