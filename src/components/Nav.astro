@@ -439,8 +439,11 @@ const flatLinks = [
     padding: 0;
     margin: 0 0 var(--space-4);
     /* Fixed grid rows keep every row perfectly aligned across the three
-       columns, regardless of how descriptions wrap. */
+       columns, regardless of how descriptions wrap. Single implicit
+       column enforced so items stack vertically (default grid-auto-flow
+       would place items across implicit columns instead). */
     display: grid;
+    grid-template-columns: 1fr;
     grid-template-rows: repeat(4, 72px);
     gap: 0;
   }
