@@ -444,11 +444,16 @@ const flatLinks = [
   }
 
   .mega-item {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: var(--space-3) var(--space-4);
     border-radius: var(--radius-sm);
     color: var(--color-ink-900);
     transition: background var(--dur-fast) var(--ease-out);
+    /* Fixed height keeps rows aligned across columns even when
+       descriptions wrap to different line counts. */
+    min-height: 68px;
   }
 
   .mega-item:hover {

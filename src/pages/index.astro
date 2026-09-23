@@ -120,32 +120,36 @@ const values = [
         </p>
       </div>
 
-      <!-- Decorative M365 pillar grid -->
-      <div class="hero-visual" aria-hidden="true">
-        <div class="pillar-badge">
+      <!-- Interactive M365 pillar grid — hover any tile to see how the
+           surrounding pillars connect through the same Microsoft substrate. -->
+      <div class="hero-visual" data-hero-stack aria-label="Microsoft 365 stack — hover a pillar to see related surfaces">
+        <div class="pillar-badge" data-tech="sharepoint"      data-related="teams,graph,copilot-studio">
           <span class="pillar-mark" style="background: linear-gradient(135deg,#038387,#03838799);">SP</span>
           <span>SharePoint</span>
         </div>
-        <div class="pillar-badge">
+        <div class="pillar-badge" data-tech="azure-ai"        data-related="copilot-studio,graph">
           <span class="pillar-mark" style="background: linear-gradient(135deg,#0078d4,#0078d499);">AI</span>
           <span>Azure AI</span>
         </div>
-        <div class="pillar-badge">
+        <div class="pillar-badge" data-tech="teams"           data-related="sharepoint,copilot-studio,power-platform">
           <span class="pillar-mark" style="background: linear-gradient(135deg,#4b53bc,#4b53bc99);">T</span>
           <span>Teams</span>
         </div>
-        <div class="pillar-badge">
+        <div class="pillar-badge" data-tech="copilot-studio"  data-related="azure-ai,teams,graph,sharepoint">
           <span class="pillar-mark" style="background: linear-gradient(135deg,#0d47a1,#0d47a199);">CS</span>
           <span>Copilot Studio</span>
         </div>
-        <div class="pillar-badge">
+        <div class="pillar-badge" data-tech="power-platform"  data-related="teams,graph,copilot-studio">
           <span class="pillar-mark" style="background: linear-gradient(135deg,#742774,#74277499);">P</span>
           <span>Power Platform</span>
         </div>
-        <div class="pillar-badge">
+        <div class="pillar-badge" data-tech="graph"           data-related="sharepoint,azure-ai,copilot-studio,power-platform,teams">
           <span class="pillar-mark" style="background: linear-gradient(135deg,#7fba00,#7fba0099);">MG</span>
           <span>Graph</span>
         </div>
+        <p class="hero-visual-hint" aria-hidden="true">
+          <span>↳</span> Hover any pillar to see related surfaces
+        </p>
       </div>
     </div>
   </section>
@@ -153,7 +157,7 @@ const values = [
   <!-- Solutions we deliver -->
   <section class="section solutions" aria-labelledby="solutions-h">
     <div class="container">
-      <header class="section-head">
+      <header class="section-head" data-reveal>
         <p class="section-eyebrow">Key solutions</p>
         <h2 id="solutions-h">Six kinds of outcomes we ship on the Microsoft&nbsp;365 stack</h2>
         <p class="section-sub">
@@ -164,8 +168,8 @@ const values = [
       </header>
 
       <div class="solutions-grid">
-        {solutions.map((sol) => (
-          <article class="solution-card">
+        {solutions.map((sol, i) => (
+          <article class="solution-card" data-reveal data-reveal-delay={String((i % 3) + 1)}>
             <span class="solution-icon" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                 <path d={sol.icon} />
@@ -185,7 +189,7 @@ const values = [
   <!-- Capabilities (practice areas) -->
   <section class="section capabilities" aria-labelledby="capabilities-h">
     <div class="container">
-      <header class="section-head">
+      <header class="section-head" data-reveal>
         <p class="section-eyebrow">Practice areas</p>
         <h2 id="capabilities-h">Four practice areas, one Microsoft&nbsp;365 substrate</h2>
         <p class="section-sub">
@@ -196,10 +200,12 @@ const values = [
       </header>
 
       <div class="capability-grid">
-        {services.map((s) => (
-          <Card href={s.href} eyebrow={s.eyebrow} title={s.title}>
-            <p>{s.body}</p>
-          </Card>
+        {services.map((s, i) => (
+          <div data-reveal data-reveal-delay={String((i % 2) + 1)}>
+            <Card href={s.href} eyebrow={s.eyebrow} title={s.title}>
+              <p>{s.body}</p>
+            </Card>
+          </div>
         ))}
       </div>
     </div>
@@ -208,14 +214,14 @@ const values = [
   <!-- Value / why-us -->
   <section class="section values" aria-labelledby="values-h">
     <div class="container">
-      <header class="section-head">
+      <header class="section-head" data-reveal>
         <p class="section-eyebrow">Why us</p>
         <h2 id="values-h">Three reasons enterprise IT teams pick us</h2>
       </header>
 
       <div class="value-grid">
-        {values.map((v) => (
-          <div class="value">
+        {values.map((v, i) => (
+          <div class="value" data-reveal data-reveal-delay={String(i + 1)}>
             <h3>{v.heading}</h3>
             <p>{v.body}</p>
           </div>
@@ -226,6 +232,38 @@ const values = [
 
   <CTABanner />
 </Layout>
+
+<script>
+  // Interactive M365 stack — hovering a pillar dims non-related pillars
+  // and highlights related ones. Data attributes define the graph.
+  const stack = document.querySelector('[data-hero-stack]') as HTMLElement | null;
+  if (stack) {
+    const badges = Array.from(stack.querySelectorAll<HTMLElement>('.pillar-badge'));
+
+    const focus = (pillar: HTMLElement) => {
+      const related = new Set((pillar.dataset.related || '').split(',').filter(Boolean));
+      stack.classList.add('is-focused');
+      badges.forEach((b) => {
+        b.classList.toggle('is-focus', b === pillar);
+        b.classList.toggle('is-related', b !== pillar && related.has(b.dataset.tech || ''));
+      });
+    };
+
+    const clearFocus = () => {
+      stack.classList.remove('is-focused');
+      badges.forEach((b) => b.classList.remove('is-focus', 'is-related'));
+    };
+
+    badges.forEach((badge) => {
+      badge.addEventListener('mouseenter', () => focus(badge));
+      badge.addEventListener('focus', () => focus(badge));
+    });
+    stack.addEventListener('mouseleave', clearFocus);
+    stack.addEventListener('focusout', (event) => {
+      if (!stack.contains((event as FocusEvent).relatedTarget as Node)) clearFocus();
+    });
+  }
+</script>
 
 <style>
   /* ── Hero ─────────────────────────────────────────────── */
@@ -310,12 +348,48 @@ const values = [
     font-size: var(--fs-sm);
     font-weight: 500;
     color: var(--color-ink-900);
+    cursor: default;
     transition: transform var(--dur-med) var(--ease-out),
-                box-shadow var(--dur-med) var(--ease-out);
+                box-shadow var(--dur-med) var(--ease-out),
+                border-color var(--dur-med) var(--ease-out),
+                opacity var(--dur-med) var(--ease-out);
   }
   .pillar-badge:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-2);
+  }
+  /* Interactive stack — when a pillar is hovered inside the grid,
+     dim the non-related pillars and lift both the hovered and related ones. */
+  .hero-visual.is-focused .pillar-badge {
+    opacity: 0.4;
+    transform: none;
+  }
+  .hero-visual.is-focused .pillar-badge.is-related {
+    opacity: 1;
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-2);
+  }
+  .hero-visual.is-focused .pillar-badge.is-focus {
+    opacity: 1;
+    border-color: var(--color-primary-cta);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(244, 128, 39, 0.24);
+  }
+  .hero-visual-hint {
+    grid-column: 1 / -1;
+    color: var(--color-ink-400);
+    font-size: var(--fs-xs);
+    margin: var(--space-3) 0 0;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    opacity: 0;
+    transition: opacity var(--dur-med) var(--ease-out);
+  }
+  .hero-visual:hover .hero-visual-hint,
+  .hero-visual:focus-within .hero-visual-hint {
+    opacity: 1;
   }
   .pillar-mark {
     display: inline-flex;

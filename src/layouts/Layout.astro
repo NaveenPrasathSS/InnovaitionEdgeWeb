@@ -58,5 +58,30 @@ const ogImageURL = new URL(ogImage, Astro.site).toString();
     </main>
 
     <Footer />
+
+    <script>
+      // Scroll-reveal: watches [data-reveal] elements and adds .is-visible
+      // when they enter the viewport. One-shot per element, respects
+      // prefers-reduced-motion, gracefully falls back to visible without JS.
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = document.querySelectorAll('[data-reveal]');
+
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        targets.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -50px 0px' },
+        );
+        targets.forEach((el) => io.observe(el));
+      }
+    </script>
   </body>
 </html>

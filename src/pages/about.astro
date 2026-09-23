@@ -170,8 +170,8 @@ const approach = [
       </header>
 
       <div class="expertise-grid">
-        {expertise.map((e) => (
-          <div class="expertise-card">
+        {expertise.map((e, i) => (
+          <div class="expertise-card" data-reveal data-reveal-delay={String((i % 3) + 1)}>
             <h3>{e.title}</h3>
             <p>{e.body}</p>
           </div>
@@ -189,8 +189,8 @@ const approach = [
       </header>
 
       <div class="approach-grid">
-        {approach.map((step) => (
-          <div class="step">
+        {approach.map((step, i) => (
+          <div class="step" data-reveal data-reveal-delay={String((i % 4) + 1)}>
             <span class="step-num" aria-hidden="true">{step.n}</span>
             <h3>{step.title}</h3>
             <p>{step.body}</p>
@@ -537,24 +537,46 @@ const approach = [
   .stance-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-8);
+    gap: var(--space-6);
+    align-items: stretch;
+  }
+
+  .stance {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-8);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    height: 100%;
+    transition: transform var(--dur-med) var(--ease-out),
+                border-color var(--dur-med) var(--ease-out),
+                box-shadow var(--dur-med) var(--ease-out);
+  }
+
+  .stance:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-2);
   }
 
   .stance-icon {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: var(--radius-full);
     background: rgba(244, 128, 39, 0.10);
     color: var(--color-primary-cta);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-5);
+    flex-shrink: 0;
   }
 
   .stance h3 {
     font-size: var(--fs-lg);
     margin: 0 0 var(--space-3);
+    color: var(--color-ink-900);
   }
 
   .stance p {
@@ -562,12 +584,13 @@ const approach = [
     font-size: var(--fs-md);
     line-height: 1.6;
     margin: 0;
+    flex-grow: 1;
   }
 
   @media (max-width: 780px) {
     .stance-grid {
       grid-template-columns: 1fr;
-      gap: var(--space-6);
+      gap: var(--space-4);
     }
   }
 </style>

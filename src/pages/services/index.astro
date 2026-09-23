@@ -86,14 +86,16 @@ const deliverySteps = [
         <h2 id="services-h">Choose the practice area — or bundle across all four</h2>
       </header>
       <div class="services-grid">
-        {services.map((s) => (
-          <Card
-            href={`/services/${s.slug}`}
-            eyebrow={s.eyebrow}
-            title={s.cardTitle}
-          >
-            <p>{s.cardBody}</p>
-          </Card>
+        {services.map((s, i) => (
+          <div data-reveal data-reveal-delay={String((i % 2) + 1)}>
+            <Card
+              href={`/services/${s.slug}`}
+              eyebrow={s.eyebrow}
+              title={s.cardTitle}
+            >
+              <p>{s.cardBody}</p>
+            </Card>
+          </div>
         ))}
       </div>
     </div>
@@ -114,8 +116,8 @@ const deliverySteps = [
       </header>
 
       <div class="delivery-grid">
-        {deliverySteps.map((step) => (
-          <div class="delivery-step">
+        {deliverySteps.map((step, i) => (
+          <div class="delivery-step" data-reveal data-reveal-delay={String((i % 3) + 1)}>
             <span class="step-num" aria-hidden="true">{step.n}</span>
             <h3>{step.title}</h3>
             <p>{step.body}</p>
