@@ -473,15 +473,19 @@ const flatLinks = [
     list-style: none;
     padding: 0;
     margin: 0 0 var(--space-4);
-    /* 2×2 grid per section — 4 items arranged 2 columns × 2 rows. */
+    /* 2×2 grid per section — 4 items in 2 columns × 2 rows.
+       Rows are pinned to an explicit height (not grid-auto-rows)
+       so row 1 and row 2 land at the same Y in all three sections,
+       regardless of description length. */
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: minmax(84px, auto);
+    grid-template-rows: repeat(2, 104px);
     gap: var(--space-2);
   }
 
   .mega-list > li {
     min-width: 0;
+    height: 100%;
   }
 
   .mega-item {
@@ -493,6 +497,7 @@ const flatLinks = [
     border-radius: var(--radius-sm);
     color: var(--color-ink-900);
     transition: background var(--dur-fast) var(--ease-out);
+    overflow: hidden;
   }
 
   .mega-item:hover {
@@ -501,18 +506,27 @@ const flatLinks = [
   }
 
   .mega-item-title {
-    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     font-size: var(--fs-sm);
     font-weight: 600;
     color: var(--color-ink-900);
-    margin-bottom: 2px;
+    margin-bottom: 4px;
+    line-height: 1.25;
+    overflow: hidden;
   }
 
   .mega-item-desc {
-    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     font-size: var(--fs-xs);
     color: var(--color-ink-500);
     line-height: 1.4;
+    overflow: hidden;
   }
 
   .mega-cta-panel {
