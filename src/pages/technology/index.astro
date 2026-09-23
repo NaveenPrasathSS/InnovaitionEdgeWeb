@@ -1,0 +1,266 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import { pillars } from '../../data/technology';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Technology', path: '/technology' },
+]);
+---
+
+<Layout
+  title="Technology — InnovAItion Edge"
+  description="The Microsoft 365, Power Platform, Azure AI, and integration technologies InnovAItion Edge builds with. One stack, six pillars of depth."
+  canonical="/technology"
+>
+  <Fragment slot="head">
+    <JsonLd schema={breadcrumb} />
+  </Fragment>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container-narrow">
+      <p class="eyebrow">Technology</p>
+      <h1>One stack. Six pillars of depth.</h1>
+      <p class="lede">
+        Everything we ship sits on top of Microsoft 365 — but "the Microsoft
+        stack" is not one thing. Below is the concrete set of platforms,
+        frameworks, and services our engineers work with day-to-day, grouped
+        by the role they play in a real delivery.
+      </p>
+    </div>
+  </section>
+
+  <!-- Pillars -->
+  <section class="section pillars-section">
+    <div class="container">
+      <div class="pillars-stack">
+        {pillars.map((pillar) => (
+          <article class="pillar">
+            <header class="pillar-head">
+              <p class="pillar-eyebrow">{pillar.eyebrow}</p>
+              <h2>{pillar.title}</h2>
+              <p class="pillar-body">{pillar.body}</p>
+            </header>
+
+            <div class="tech-grid" role="list">
+              {pillar.items.map((item) => (
+                <div class="tech" role="listitem">
+                  <span
+                    class="tech-tile"
+                    aria-hidden="true"
+                    style={`background: linear-gradient(135deg, ${item.color}, ${item.color}dd);`}
+                  >
+                    {item.initials}
+                  </span>
+                  <span class="tech-name">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why one stack section -->
+  <section class="section why-section" aria-labelledby="why-h">
+    <div class="container-narrow">
+      <p class="section-eyebrow">Why the stack matters</p>
+      <h2 id="why-h">Decisions compound when they share a substrate.</h2>
+      <div class="why-body">
+        <p>
+          A SharePoint decision informs a Power Automate flow. A Power Automate
+          flow surfaces inside Teams via an Adaptive Card. A Copilot Studio
+          agent grounds itself in the same Microsoft Graph the SharePoint
+          hub is architected around. Identity is shared. Permissions are
+          shared. Telemetry lands in the same Application Insights.
+        </p>
+        <p>
+          That is what "M365 depth over breadth" actually buys you: every
+          project you ship makes the next project cheaper and safer. Every
+          governance decision you take once applies everywhere. Every new
+          Microsoft platform capability released next quarter shows up on
+          top of what you already have — not as another integration.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    heading="Have a specific technology need?"
+    subheading="Whether it is an SPFx component library, a Copilot Studio agent, or a Power Automate connector to a legacy system — we can scope it in 30 minutes."
+    ctaLabel="Book a discovery call"
+  />
+</Layout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────── */
+  .page-hero {
+    padding: var(--space-20) 0 var(--space-12);
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(244, 128, 39, 0.08), transparent 60%),
+      linear-gradient(180deg, #fff, var(--color-surface-alt));
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin: 0 0 var(--space-4);
+  }
+
+  .lede {
+    font-size: var(--fs-lg);
+    color: var(--color-ink-500);
+    max-width: 62ch;
+    margin: var(--space-6) 0 0;
+    line-height: 1.6;
+  }
+
+  /* ── Pillars ──────────────────────────────────────────── */
+  .pillars-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+
+  .pillar {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: var(--space-12);
+    align-items: start;
+    padding-block: var(--space-8);
+  }
+
+  .pillar + .pillar {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .pillar-head {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-6));
+  }
+
+  .pillar-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin: 0 0 var(--space-3);
+  }
+
+  .pillar h2 {
+    font-size: var(--fs-2xl);
+    margin: 0 0 var(--space-4);
+    max-width: 15ch;
+  }
+
+  .pillar-body {
+    color: var(--color-ink-500);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .tech {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    transition: transform var(--dur-med) var(--ease-out),
+                border-color var(--dur-med) var(--ease-out),
+                box-shadow var(--dur-med) var(--ease-out);
+  }
+
+  .tech:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-1);
+  }
+
+  .tech-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 var(--space-3);
+    border-radius: 10px;
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: -0.01em;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.14);
+  }
+
+  .tech-name {
+    color: var(--color-ink-900);
+    font-weight: 500;
+    font-size: var(--fs-sm);
+    line-height: 1.3;
+  }
+
+  @media (max-width: 900px) {
+    .pillar {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+    .pillar-head {
+      position: static;
+    }
+    .pillar h2 {
+      max-width: none;
+    }
+  }
+
+  /* ── Why section ──────────────────────────────────────── */
+  .why-section {
+    background: var(--color-surface-alt);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .section-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin: 0 0 var(--space-3);
+  }
+
+  .why-section h2 {
+    max-width: 22ch;
+    margin-bottom: var(--space-6);
+  }
+
+  .why-body p {
+    font-size: var(--fs-md);
+    color: var(--color-ink-500);
+    line-height: 1.7;
+    margin: 0 0 var(--space-4);
+    max-width: 64ch;
+  }
+
+  .why-body p:last-child {
+    margin-bottom: 0;
+  }
+</style>

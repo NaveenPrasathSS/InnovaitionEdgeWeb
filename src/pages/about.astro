@@ -2,92 +2,205 @@
 import Layout from '../layouts/Layout.astro';
 import CTABanner from '../components/CTABanner.astro';
 import JsonLd from '../components/JsonLd.astro';
+import Button from '../components/Button.astro';
 import { breadcrumbSchema } from '../lib/schema';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
 ]);
+
+const expertise = [
+  {
+    title: 'Microsoft 365 platform',
+    body: 'Deep hands-on experience across SharePoint Online, Teams, Exchange, OneDrive, and the M365 admin surface — configuration, governance, and modernization.',
+  },
+  {
+    title: 'Enterprise development',
+    body: 'SPFx, Teams Toolkit, Bot Framework, Adaptive Cards, .NET, TypeScript, React — the full modern stack behind Microsoft 365 line-of-business apps.',
+  },
+  {
+    title: 'Power Platform',
+    body: 'Power Apps, Power Automate, Power BI, Dataverse, and Copilot Studio — from citizen-developer flows to model-driven apps built on enterprise governance.',
+  },
+  {
+    title: 'Azure AI & Copilot',
+    body: 'Azure OpenAI, Azure AI Foundry, Azure AI Search, and Copilot Studio — grounded agents, RAG pipelines, and evaluation harnesses that ship to production.',
+  },
+  {
+    title: 'Identity & security',
+    body: 'Entra ID (Azure AD), conditional access, application registrations, B2B / guest patterns, and DLP configuration — the plumbing every M365 project depends on.',
+  },
+  {
+    title: 'Integration & data',
+    body: 'Microsoft Graph, custom connectors, Azure Functions, Logic Apps, and Dataverse — connecting M365 to the systems your business actually runs on.',
+  },
+];
+
+const approach = [
+  {
+    n: '01',
+    title: 'Discover',
+    body: 'We start with the specific workflow, page, or agent that needs to change — and how you will measure success. No open-ended charters.',
+  },
+  {
+    n: '02',
+    title: 'Design',
+    body: 'A tight solution architecture built to your governance model, identity setup, and existing M365 estate — reviewed with your team before we cut code.',
+  },
+  {
+    n: '03',
+    title: 'Build',
+    body: 'Iterative delivery in 1–2 week increments. Every increment ends with something a real user in your business can touch — not slideware.',
+  },
+  {
+    n: '04',
+    title: 'Handover',
+    body: 'Documentation, source code, deployment scripts, and a playbook your team can extend without another SOW. We do not create dependency on us.',
+  },
+];
 ---
 
 <Layout
   title="About — InnovAItion Edge"
-  description="A small, founder-led Microsoft 365 solutions provider based in Coimbatore. We modernize the M365 workplace with AI agents, custom apps, and Power Platform automation."
+  description="InnovAItion Edge is a Microsoft 365 solutions provider modernizing the enterprise workplace with AI, custom apps, and Power Platform automation across SharePoint, Teams, and Azure."
   canonical="/about"
 >
   <Fragment slot="head">
     <JsonLd schema={breadcrumb} />
   </Fragment>
 
+  <!-- Hero -->
   <section class="page-hero">
-    <div class="container-narrow">
-      <p class="eyebrow">About</p>
-      <h1>A small team betting hard on the Microsoft&nbsp;365 substrate.</h1>
-      <p class="lede">
-        InnovAItion Edge is a Coimbatore-based Microsoft 365 solutions
-        provider. We exist for one reason: to make the M365 platforms
-        enterprises already own — SharePoint, Teams, Power Platform,
-        Azure AI — actually deliver on the promise the license implies.
-      </p>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">About InnovAItion Edge</p>
+        <h1>A team betting hard on the Microsoft&nbsp;365 substrate.</h1>
+        <p class="lede">
+          We are a Microsoft 365 solutions provider modernizing the way
+          enterprises get work done across SharePoint, Teams, Power Platform,
+          and Azure AI. One stack. Serious depth. Shipped software.
+        </p>
+      </div>
+
+      <div class="hero-stat-grid" aria-label="At a glance">
+        <div class="stat">
+          <p class="stat-num">4</p>
+          <p class="stat-label">Microsoft 365 practice areas</p>
+        </div>
+        <div class="stat">
+          <p class="stat-num">100%</p>
+          <p class="stat-label">Microsoft stack focus</p>
+        </div>
+        <div class="stat">
+          <p class="stat-num">2–10<span>wks</span></p>
+          <p class="stat-label">Typical engagement</p>
+        </div>
+        <div class="stat">
+          <p class="stat-num">0</p>
+          <p class="stat-label">Account-management layer</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section belief-section" aria-labelledby="belief-h">
-    <div class="container-narrow">
-      <p class="section-eyebrow">What we believe</p>
-      <h2 id="belief-h">Depth on one stack beats surface on ten.</h2>
-      <div class="belief-body">
+  <!-- Who we are -->
+  <section class="section who-section" aria-labelledby="who-h">
+    <div class="container who-grid">
+      <div class="who-eyebrow">
+        <p class="section-eyebrow">Who we are</p>
+      </div>
+      <div class="who-body">
+        <h2 id="who-h">A specialist Microsoft&nbsp;365 partner — not a
+          generalist digital agency.</h2>
         <p>
-          Most enterprise IT estates are running a zoo of SaaS tools bolted
-          on top of an M365 tenant that costs a fortune and does 20% of what
-          it can. Every new productivity problem gets solved by procuring
-          another tool, wiring it into SSO, and adding it to the mental
-          load of the people who have to use it.
+          InnovAItion Edge exists for one reason: to make the Microsoft 365
+          platforms enterprises already own actually deliver on the promise
+          the license implies. Our team has spent years embedded inside
+          enterprise Microsoft estates — the good, the bad, and the frankly
+          inherited. Every engagement we take is shaped by that experience.
         </p>
         <p>
-          We think the interesting move is the opposite one: to take the
-          Microsoft platform seriously — SharePoint as a real content
-          system, Teams as a real application surface, Power Platform as a
-          real automation runtime, Azure AI as a real agent platform — and
-          push it to its limits. When you do, most of the "we need a new
-          SaaS for X" pressure quietly disappears.
-        </p>
-        <p>
-          That is what we ship. Every engagement is aimed at replacing
-          spreadsheet-and-email operational drag with something that lives
-          natively where your people already work.
+          We do not build websites, mobile apps, or SaaS integrations
+          outside the M365 ecosystem. That focus is deliberate. Depth on
+          one stack beats surface on ten — and it is what lets us go from
+          "here is the workflow that hurts" to "here is the shipped
+          solution" in weeks rather than quarters.
         </p>
       </div>
     </div>
   </section>
 
-  <section class="section founder-section" aria-labelledby="founder-h">
+  <!-- Mission -->
+  <section class="section mission-section" aria-labelledby="mission-h">
     <div class="container-narrow">
-      <p class="section-eyebrow">Founder note</p>
-      <h2 id="founder-h">Who you are actually talking to</h2>
-      <div class="founder-body">
+      <p class="section-eyebrow">Our mission</p>
+      <h2 id="mission-h">Replace the spreadsheet-and-email drag with software that lives natively where your people work.</h2>
+      <div class="mission-body">
         <p>
-          I am <strong>Naveen Prasath Selvaraj</strong>, the founder and
-          builder here. Before starting InnovAItion Edge I spent years
-          embedded in enterprise Microsoft 365 estates — the good, the bad,
-          and the frankly-inherited. That work is the reason this company
-          exists in the shape it does.
+          Every enterprise we walk into is spending millions on Microsoft
+          365 licenses while still running the important work in a
+          spreadsheet on someone's laptop. Approvals in email chains.
+          Reports in one analyst's Excel file. Knowledge trapped in
+          conversations that never made it to SharePoint.
         </p>
         <p>
-          When you contact us, you get me. Not a scheduling assistant, not
-          a sales development rep, not a solution architect with a slide
-          deck. If we agree to work together, I am one of the people
-          actually building it. That is deliberate — it is the only way to
-          honestly claim the "ship in weeks, not quarters" pitch.
-        </p>
-        <p>
-          I am based in Coimbatore, India, and work with clients globally
-          across time zones. Reply hours are Mon–Fri, 09:00–18:00 IST.
+          Our mission is to close that gap — to take the Microsoft platforms
+          you already own seriously, push them to their limits, and replace
+          the operational drag with software that is native to Teams,
+          governed properly in SharePoint, and automated end-to-end in
+          Power Platform.
         </p>
       </div>
     </div>
   </section>
 
+  <!-- Expertise pillars -->
+  <section class="section expertise-section" aria-labelledby="expertise-h">
+    <div class="container">
+      <header class="section-head">
+        <p class="section-eyebrow">What we bring</p>
+        <h2 id="expertise-h">Six areas of engineering depth across the Microsoft ecosystem</h2>
+        <p class="section-sub">
+          Every service line we ship sits on top of these — not the other way
+          around. When a project needs Entra ID conditional access, a Power
+          Automate connector to a legacy SQL box, and a Copilot Studio agent
+          talking to Graph, we do not stitch three vendors together.
+        </p>
+      </header>
+
+      <div class="expertise-grid">
+        {expertise.map((e) => (
+          <div class="expertise-card">
+            <h3>{e.title}</h3>
+            <p>{e.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="section approach-section" aria-labelledby="approach-h">
+    <div class="container">
+      <header class="section-head">
+        <p class="section-eyebrow">How we work</p>
+        <h2 id="approach-h">A four-step loop from scoping to handover</h2>
+      </header>
+
+      <div class="approach-grid">
+        {approach.map((step) => (
+          <div class="step">
+            <span class="step-num" aria-hidden="true">{step.n}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Stance -->
   <section class="section stance-section" aria-labelledby="stance-h">
     <div class="container">
       <div class="stance-head">
@@ -96,6 +209,11 @@ const breadcrumb = breadcrumbSchema([
       </div>
       <div class="stance-grid">
         <div class="stance">
+          <div class="stance-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
+            </svg>
+          </div>
           <h3>Ship a slide-deck engagement</h3>
           <p>
             Every project ends with running software your team is using —
@@ -104,20 +222,30 @@ const breadcrumb = breadcrumbSchema([
           </p>
         </div>
         <div class="stance">
+          <div class="stance-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
+            </svg>
+          </div>
           <h3>Chase every AI trend</h3>
           <p>
-            We build Azure AI + Copilot Studio because they live in the
+            We build with Azure AI + Copilot Studio because they live in the
             same tenant, same permission model, same identity as everything
             else we ship. We will not add a third vector database if
             Azure AI Search already fits.
           </p>
         </div>
         <div class="stance">
-          <h3>Grow into an account layer</h3>
+          <div class="stance-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
+            </svg>
+          </div>
+          <h3>Add an account-management layer</h3>
           <p>
-            We stay small on purpose. The moment there is an account
-            manager between you and the person writing the code, the
-            engagement stops working the way it works today.
+            The engineers on your project are the ones you talk to. No
+            account manager filtering scope, no requirements ping-pong. The
+            moment there is a middle layer, delivery slows and quality drops.
           </p>
         </div>
       </div>
@@ -125,19 +253,29 @@ const breadcrumb = breadcrumbSchema([
   </section>
 
   <CTABanner
-    heading="Curious if we are the right fit?"
+    heading="Curious if we are the right fit for your M365 estate?"
     subheading="A 30-minute discovery call is enough to know. We will tell you honestly if we are — and if not, where to look."
     ctaLabel="Book a discovery call"
   />
 </Layout>
 
 <style>
+  /* ── Hero ─────────────────────────────────────────────── */
   .page-hero {
-    padding: var(--space-20) 0 var(--space-12);
+    padding: var(--space-24) 0 var(--space-16);
     background:
-      radial-gradient(ellipse at 20% 0%, rgba(244, 128, 39, 0.08), transparent 60%),
+      radial-gradient(ellipse at 20% -5%, rgba(244, 128, 39, 0.10), transparent 55%),
+      radial-gradient(ellipse at 90% 20%, rgba(244, 128, 39, 0.06), transparent 50%),
       linear-gradient(180deg, #fff, var(--color-surface-alt));
     border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--space-16);
+    align-items: end;
   }
 
   .eyebrow {
@@ -156,11 +294,57 @@ const breadcrumb = breadcrumbSchema([
   .lede {
     font-size: var(--fs-lg);
     color: var(--color-ink-500);
-    max-width: 60ch;
+    max-width: 56ch;
     margin: var(--space-6) 0 0;
     line-height: 1.6;
   }
 
+  .hero-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .stat {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-1);
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-primary-700);
+    margin: 0 0 var(--space-2);
+    line-height: 1;
+  }
+
+  .stat-num span {
+    font-size: 1rem;
+    color: var(--color-ink-500);
+    font-weight: 500;
+    margin-left: 2px;
+  }
+
+  .stat-label {
+    color: var(--color-ink-500);
+    font-size: var(--fs-sm);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+  }
+
+  /* ── Section shared ──────────────────────────────────── */
   .section-eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -170,14 +354,33 @@ const breadcrumb = breadcrumbSchema([
     margin: 0 0 var(--space-3);
   }
 
-  .belief-section h2,
-  .founder-section h2 {
+  .section-head {
+    max-width: 720px;
+    margin-bottom: var(--space-12);
+  }
+
+  .section-sub {
+    color: var(--color-ink-500);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: var(--space-4) 0 0;
+    max-width: 62ch;
+  }
+
+  /* ── Who we are ─────────────────────────────────────── */
+  .who-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  .who-body h2 {
     max-width: 22ch;
     margin-bottom: var(--space-6);
   }
 
-  .belief-body p,
-  .founder-body p {
+  .who-body p {
     font-size: var(--fs-md);
     color: var(--color-ink-500);
     line-height: 1.7;
@@ -185,21 +388,147 @@ const breadcrumb = breadcrumbSchema([
     max-width: 62ch;
   }
 
-  .belief-body p:last-child,
-  .founder-body p:last-child {
+  .who-body p:last-child {
     margin-bottom: 0;
   }
 
-  .founder-body strong {
-    color: var(--color-ink-900);
+  @media (max-width: 780px) {
+    .who-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
   }
 
-  .founder-section {
+  /* ── Mission ─────────────────────────────────────────── */
+  .mission-section {
     background: var(--color-surface-alt);
     border-block: 1px solid var(--color-border);
   }
 
-  /* Stance */
+  .mission-section h2 {
+    max-width: 26ch;
+    margin-bottom: var(--space-6);
+  }
+
+  .mission-body p {
+    font-size: var(--fs-md);
+    color: var(--color-ink-500);
+    line-height: 1.7;
+    margin: 0 0 var(--space-4);
+    max-width: 64ch;
+  }
+
+  .mission-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── Expertise ───────────────────────────────────────── */
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  .expertise-card {
+    padding: var(--space-8);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: transform var(--dur-med) var(--ease-out),
+                border-color var(--dur-med) var(--ease-out),
+                box-shadow var(--dur-med) var(--ease-out);
+  }
+
+  .expertise-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-2);
+  }
+
+  .expertise-card h3 {
+    font-size: var(--fs-lg);
+    margin: 0 0 var(--space-3);
+    color: var(--color-ink-900);
+  }
+
+  .expertise-card p {
+    color: var(--color-ink-500);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .expertise-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 620px) {
+    .expertise-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Approach ────────────────────────────────────────── */
+  .approach-section {
+    background: var(--color-surface-alt);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+
+  .step {
+    position: relative;
+    padding-top: var(--space-4);
+  }
+
+  .step-num {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-cta) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: var(--space-3);
+  }
+
+  .step h3 {
+    font-size: var(--fs-lg);
+    margin: 0 0 var(--space-3);
+    color: var(--color-ink-900);
+  }
+
+  .step p {
+    color: var(--color-ink-500);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .approach-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-8);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .approach-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Stance ──────────────────────────────────────────── */
   .stance-head {
     max-width: 720px;
     margin-bottom: var(--space-10);
@@ -209,6 +538,18 @@ const breadcrumb = breadcrumbSchema([
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-8);
+  }
+
+  .stance-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    background: rgba(244, 128, 39, 0.10);
+    color: var(--color-primary-cta);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-4);
   }
 
   .stance h3 {

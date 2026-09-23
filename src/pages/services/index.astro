@@ -3,38 +3,88 @@ import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
 import CTABanner from '../../components/CTABanner.astro';
 import JsonLd from '../../components/JsonLd.astro';
+import Button from '../../components/Button.astro';
 import { breadcrumbSchema } from '../../lib/schema';
 import { services } from '../../data/services';
+import { pillars } from '../../data/technology';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', path: '/' },
   { name: 'Services', path: '/services' },
 ]);
+
+// Show a preview strip of technologies from the first three pillars
+const techPreview = pillars.slice(0, 3).flatMap((p) => p.items.slice(0, 4));
+
+const deliverySteps = [
+  {
+    n: '01',
+    title: 'Discovery',
+    body: 'A short paid discovery — mapping the workflow, the existing M365 estate, and the success metric. Ends with a scoped proposal, not another sales call.',
+  },
+  {
+    n: '02',
+    title: 'Design',
+    body: 'A tight solution architecture aligned to your identity, governance, and existing tenant footprint. Reviewed with your team before any code is written.',
+  },
+  {
+    n: '03',
+    title: 'Build',
+    body: 'Iterative 1–2 week increments. Every increment ends with something a real user in your business can touch — not slideware, not a design comp.',
+  },
+  {
+    n: '04',
+    title: 'Pilot',
+    body: 'A small production cohort using it for real work. Telemetry review, feedback loop, and a go / no-go decision before broad rollout.',
+  },
+  {
+    n: '05',
+    title: 'Rollout',
+    body: 'Expansion in tranches with proper change management, training assets, and the operational runbooks your support team will actually use.',
+  },
+  {
+    n: '06',
+    title: 'Handover',
+    body: 'Documentation, source access, deployment scripts, and a playbook your team can extend without another SOW. We do not create dependency on us.',
+  },
+];
 ---
 
 <Layout
   title="Services — InnovAItion Edge"
-  description="What we build across the Microsoft 365 stack: SharePoint modernization, Teams apps, Power Platform automation, and Azure AI agents."
+  description="What we build across the Microsoft 365 stack: SharePoint modernization, Teams apps, Power Platform automation, and Azure AI agents. Delivered end-to-end, from discovery to handover."
 >
   <Fragment slot="head">
     <JsonLd schema={breadcrumb} />
   </Fragment>
 
+  <!-- Hero -->
   <section class="page-hero">
-    <div class="container-narrow">
-      <p class="eyebrow">Services</p>
-      <h1>Four practice areas. One Microsoft&nbsp;365 substrate.</h1>
-      <p class="lede">
-        We do not chase every SaaS trend or ship every framework. Everything
-        we build sits on top of the Microsoft 365 stack you already own — so
-        decisions in one area compound into the next, rather than
-        fragmenting into a zoo of tools nobody has time to maintain.
-      </p>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Services</p>
+        <h1>Four practice areas. One Microsoft&nbsp;365 substrate.</h1>
+        <p class="lede">
+          We do not chase every SaaS trend or ship every framework. Everything
+          we build sits on top of the Microsoft 365 stack you already own — so
+          decisions in one area compound into the next, rather than
+          fragmenting into a zoo of tools nobody has time to maintain.
+        </p>
+        <div class="hero-actions">
+          <Button href="/contact" variant="primary" size="lg">Book a discovery call</Button>
+          <Button href="/technology" variant="secondary" size="lg">See our tech stack</Button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section services-grid-section">
+  <!-- Services grid -->
+  <section class="section services-grid-section" aria-labelledby="services-h">
     <div class="container">
+      <header class="section-head">
+        <p class="section-eyebrow">Where we ship</p>
+        <h2 id="services-h">Choose the practice area — or bundle across all four</h2>
+      </header>
       <div class="services-grid">
         {services.map((s) => (
           <Card
@@ -49,13 +99,71 @@ const breadcrumb = breadcrumbSchema([
     </div>
   </section>
 
-  <section class="section approach-section">
+  <!-- Delivery methodology -->
+  <section class="section delivery-section" aria-labelledby="delivery-h">
+    <div class="container">
+      <header class="section-head">
+        <p class="section-eyebrow">Delivery methodology</p>
+        <h2 id="delivery-h">A six-step loop from discovery to handover</h2>
+        <p class="section-sub">
+          Every engagement runs this shape. The individual steps flex to the
+          service line (a Power Automate build looks different from an Azure
+          AI agent) but the loop is the same — and it is why we can honestly
+          claim "shipped in weeks, not quarters."
+        </p>
+      </header>
+
+      <div class="delivery-grid">
+        {deliverySteps.map((step) => (
+          <div class="delivery-step">
+            <span class="step-num" aria-hidden="true">{step.n}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology teaser -->
+  <section class="section tech-teaser-section" aria-labelledby="tech-h">
+    <div class="container tech-teaser-grid">
+      <div class="tech-copy">
+        <p class="section-eyebrow">Under the hood</p>
+        <h2 id="tech-h">Every service line, on the same stack</h2>
+        <p>
+          SPFx, Teams Toolkit, Power Automate connectors, Copilot Studio,
+          Azure AI Foundry, Microsoft Graph — the Microsoft ecosystem we build
+          on runs deep. Explore the concrete platforms, frameworks, and
+          services behind every delivery.
+        </p>
+        <Button href="/technology" variant="secondary" size="md">See the full tech stack →</Button>
+      </div>
+
+      <div class="tech-preview" aria-hidden="true">
+        {techPreview.map((item) => (
+          <div class="tech-preview-item">
+            <span
+              class="tech-tile-sm"
+              style={`background: linear-gradient(135deg, ${item.color}, ${item.color}dd);`}
+            >
+              {item.initials}
+            </span>
+            <span class="tech-name-sm">{item.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="section approach-section" aria-labelledby="approach-h">
     <div class="container-narrow">
       <p class="section-eyebrow">How we deliver</p>
-      <h2>A tight loop, not a slide deck</h2>
+      <h2 id="approach-h">A tight loop, not a slide deck</h2>
       <div class="approach-grid">
         <div class="approach-item">
-          <h3>1. Scope with a real success metric</h3>
+          <h3>Scope with a real success metric</h3>
           <p>
             Every engagement starts with the specific workflow, page, or
             agent that will change — and how we will know it worked. No
@@ -63,7 +171,7 @@ const breadcrumb = breadcrumbSchema([
           </p>
         </div>
         <div class="approach-item">
-          <h3>2. Ship in weeks, not quarters</h3>
+          <h3>Ship in weeks, not quarters</h3>
           <p>
             Engagements are 2–10 weeks depending on service line. First
             deliverable is always something a real user in your business can
@@ -71,7 +179,7 @@ const breadcrumb = breadcrumbSchema([
           </p>
         </div>
         <div class="approach-item">
-          <h3>3. Hand off with playbooks</h3>
+          <h3>Hand off with playbooks</h3>
           <p>
             We do not create dependency on us. Every engagement ends with
             documentation, source access, and a playbook your team can
@@ -86,12 +194,18 @@ const breadcrumb = breadcrumbSchema([
 </Layout>
 
 <style>
+  /* ── Hero ─────────────────────────────────────────────── */
   .page-hero {
-    padding: var(--space-20) 0 var(--space-12);
+    padding: var(--space-24) 0 var(--space-16);
     background:
-      radial-gradient(ellipse at 30% 0%, rgba(244, 128, 39, 0.08), transparent 60%),
+      radial-gradient(ellipse at 20% 0%, rgba(244, 128, 39, 0.10), transparent 55%),
+      radial-gradient(ellipse at 90% 30%, rgba(244, 128, 39, 0.06), transparent 55%),
       linear-gradient(180deg, #fff, var(--color-surface-alt));
     border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+  .hero-inner {
+    max-width: 940px;
   }
   .eyebrow {
     text-transform: uppercase;
@@ -101,13 +215,44 @@ const breadcrumb = breadcrumbSchema([
     color: var(--color-primary-700);
     margin: 0 0 var(--space-4);
   }
+  .page-hero h1 {
+    max-width: 20ch;
+  }
   .lede {
     font-size: var(--fs-lg);
     color: var(--color-ink-500);
     max-width: 62ch;
-    margin: var(--space-4) 0 0;
+    margin: var(--space-6) 0 var(--space-8);
+    line-height: 1.6;
+  }
+  .hero-actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
   }
 
+  /* ── Shared ──────────────────────────────────────────── */
+  .section-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin: 0 0 var(--space-3);
+  }
+  .section-head {
+    max-width: 720px;
+    margin-bottom: var(--space-12);
+  }
+  .section-sub {
+    color: var(--color-ink-500);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: var(--space-4) 0 0;
+    max-width: 62ch;
+  }
+
+  /* ── Services grid ──────────────────────────────────── */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -119,38 +264,156 @@ const breadcrumb = breadcrumbSchema([
     }
   }
 
-  .section-eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--color-primary-700);
+  /* ── Delivery ─────────────────────────────────────────── */
+  .delivery-section {
+    background: var(--color-surface-alt);
+    border-block: 1px solid var(--color-border);
+  }
+  .delivery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+  .delivery-step {
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: transform var(--dur-med) var(--ease-out),
+                border-color var(--dur-med) var(--ease-out),
+                box-shadow var(--dur-med) var(--ease-out);
+  }
+  .delivery-step:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-2);
+  }
+  .step-num {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-cta) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: var(--space-3);
+  }
+  .delivery-step h3 {
+    font-size: var(--fs-lg);
     margin: 0 0 var(--space-3);
   }
+  .delivery-step p {
+    color: var(--color-ink-500);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    .delivery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 620px) {
+    .delivery-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 
+  /* ── Technology teaser ───────────────────────────────── */
+  .tech-teaser-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+  .tech-copy h2 {
+    max-width: 20ch;
+    margin-bottom: var(--space-4);
+  }
+  .tech-copy p {
+    font-size: var(--fs-md);
+    color: var(--color-ink-500);
+    line-height: 1.6;
+    margin: 0 0 var(--space-6);
+    max-width: 52ch;
+  }
+  .tech-preview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+  .tech-preview-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .tech-preview-item:hover {
+    transform: translateY(-1px);
+  }
+  .tech-tile-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 var(--space-2);
+    border-radius: 8px;
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.75rem;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.14);
+  }
+  .tech-name-sm {
+    color: var(--color-ink-900);
+    font-weight: 500;
+    font-size: var(--fs-xs);
+    line-height: 1.3;
+  }
+  @media (max-width: 900px) {
+    .tech-teaser-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+    .tech-preview {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  @media (max-width: 620px) {
+    .tech-preview {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* ── Approach ────────────────────────────────────────── */
   .approach-section h2 {
     max-width: 22ch;
     margin-bottom: var(--space-10);
   }
-
   .approach-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-8);
   }
-
   .approach-item h3 {
     font-size: var(--fs-lg);
     margin-bottom: var(--space-3);
   }
-
   .approach-item p {
     color: var(--color-ink-500);
     font-size: var(--fs-md);
     line-height: 1.6;
     margin: 0;
   }
-
   @media (max-width: 780px) {
     .approach-grid {
       grid-template-columns: 1fr;
