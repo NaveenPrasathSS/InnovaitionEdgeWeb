@@ -241,8 +241,8 @@ a:hover {
 
 [data-reveal] {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 650ms var(--ease-out), transform 650ms var(--ease-out);
+  transform: translateY(48px);
+  transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out);
   will-change: opacity, transform;
 }
 
@@ -251,11 +251,11 @@ a:hover {
   transform: none;
 }
 
-[data-reveal-delay='1'] { transition-delay: 90ms; }
-[data-reveal-delay='2'] { transition-delay: 180ms; }
-[data-reveal-delay='3'] { transition-delay: 270ms; }
-[data-reveal-delay='4'] { transition-delay: 360ms; }
-[data-reveal-delay='5'] { transition-delay: 450ms; }
+[data-reveal-delay='1'] { transition-delay: 150ms; }
+[data-reveal-delay='2'] { transition-delay: 300ms; }
+[data-reveal-delay='3'] { transition-delay: 450ms; }
+[data-reveal-delay='4'] { transition-delay: 600ms; }
+[data-reveal-delay='5'] { transition-delay: 750ms; }
 
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] {

@@ -438,22 +438,27 @@ const flatLinks = [
     list-style: none;
     padding: 0;
     margin: 0 0 var(--space-4);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
+    /* Fixed grid rows keep every row perfectly aligned across the three
+       columns, regardless of how descriptions wrap. */
+    display: grid;
+    grid-template-rows: repeat(4, 72px);
+    gap: 0;
+  }
+
+  .mega-list li {
+    display: block;
   }
 
   .mega-item {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: var(--space-3) var(--space-4);
+    height: 100%;
+    padding: 0 var(--space-4);
     border-radius: var(--radius-sm);
     color: var(--color-ink-900);
     transition: background var(--dur-fast) var(--ease-out);
-    /* Fixed height keeps rows aligned across columns even when
-       descriptions wrap to different line counts. */
-    min-height: 68px;
+    overflow: hidden;
   }
 
   .mega-item:hover {
