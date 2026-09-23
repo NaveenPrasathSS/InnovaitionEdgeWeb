@@ -317,7 +317,10 @@ const flatLinks = [
     width: auto;
   }
 
-  .primary-nav ul {
+  /* Direct-child selector — otherwise this rule leaks into the
+     nested .mega-list <ul> and forces it to flex, which overrides
+     the 2×2 grid layout the mega-menu depends on. */
+  .primary-nav > ul {
     display: flex;
     align-items: center;
     gap: var(--space-6);
