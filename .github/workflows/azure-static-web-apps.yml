@@ -1,20 +1,23 @@
 name: Azure Static Web Apps CI/CD
 
 on:
-  # Every push to main deploys to production
+  # Every push to the production branch deploys to production.
+  # Includes both 'main' (new repo convention) and 'master' (old repo's
+  # existing default) so the same workflow file works in either repo.
   push:
     branches:
       - main
-  # PRs into main auto-provision a preview environment (SWA-managed URL);
-  # closing the PR cleans it up. This is our zero-cost "staging" — no
-  # separate slot to maintain, works out of the box.
+      - master
+  # PRs into either production branch auto-provision a preview
+  # environment (SWA-managed URL); closing the PR cleans it up.
+  # Our zero-cost "staging" — no separate slot to maintain.
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+      - master
   # Lets us trigger a build+deploy manually from any branch via the
-  # Actions tab — used to smoke-test the Astro build in CI before the
-  # first cutover PR is merged.
+  # Actions tab.
   workflow_dispatch:
 
 concurrency:
